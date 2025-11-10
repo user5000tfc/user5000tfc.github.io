@@ -1,16 +1,781 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en" data-lang="EN">
 <head>
-  <meta charset="utf-8" />
-  <title>Opening PDF…</title>
-  <script>
-    // Replace with your PDF URL
-    const pdfUrl = "/file.pdf";
-    // Go directly to the PDF (browser shows its built-in viewer)
-    window.location.replace(pdfUrl);
-  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ABDS</title>
+  <meta name="description" content="Nonprofit organization advancing equality, social justice, and community empowerment.">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      /* Colors from logo */
+      --deep-blue:#0b3c88;   /* primary */
+      --warm-gold:#c79a4a;   /* accent */
+      --ink:#0b1424;         /* base text */
+      --muted:#5c6b7e;
+      --panel:#ffffff;
+      --bg:#f6f8fb;
+      --line:rgba(11,20,36,.10);
+      --shadow:0 18px 60px rgba(11,20,36,.15);
+      --radius:18px;
+
+      /* Cover image */
+      --cover-url:url('https://images.unsplash.com/photo-1523246191633-8cfa71367a7b?q=80&w=1600&auto=format&fit=crop');
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+      line-height:1.55;
+    }
+    img{display:block;max-width:100%}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin-inline:auto;padding:0 20px}
+
+    /* ======= Header / Nav ======= */
+    .topbar{
+      position:sticky; top:0; z-index:60;
+      background:rgba(255,255,255,.85);
+      backdrop-filter:saturate(140%) blur(8px);
+      border-bottom:1px solid var(--line);
+      transition:all .25s ease;
+      display: flex;
+      justify-content: space-between;
+    }
+    .topbar.shrink{padding-block:6px;}
+    .topbar-inner{display:flex;align-items:center;justify-content:space-between; gap:16px; padding:12px 20px; margin: 0;}
+    .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.01em}
+    .brand .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+    /* Desktop nav */
+    nav{display:flex; align-items:center; gap:14px}
+    .menu{display:flex; gap:10px; list-style:none; padding:0; margin:0;};
+    .menu a{
+      padding:8px 12px; border-radius:999px; font-weight:600; font-size:.95rem;
+      transition:transform .15s ease, background .2s ease;
+    }
+    .menu a:hover{background:rgba(199,154,74,.12); transform:translateY(-1px)}
+    .cta{
+      padding:10px 14px; border-radius:999px; font-weight:700;
+      background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold));
+      color:#fff; box-shadow:0 10px 24px rgba(11,60,136,.25);
+    }
+    /* Language selector */
+    .lang{display:flex; align-items:center; gap:6px; padding-left:6px}
+    .lang button{
+      border:1px solid var(--line);
+      background:#fff; padding:6px 10px; border-radius:999px; font-weight:700; cursor:pointer;
+    }
+    .lang button.active{border-color:rgba(11,60,136,.35); color:#fff; background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+    .sep{width:1px; height:22px; background:var(--line)}
+
+    /* Mobile nav */
+    .nav-toggle{
+      display:none; appearance:none; border:1px solid var(--line); background:#fff;
+      padding:8px 10px; border-radius:12px; font-weight:800;
+    }
+    .nav-wrap{display:flex; align-items:center; gap:12px}
+    @media (max-width: 860px){
+      .nav-toggle{display:inline-flex}
+      nav{position:fixed; inset:auto 0 0 0; top:60px; background:#fff; border-top:1px solid var(--line);
+           display:none; z-index:55}
+      nav.open{display:block}
+      .menu{flex-direction:column; padding:14px 16px; background-color: #fffffff7; text-align: center;}
+      .menu a{padding:12px 14px; border-radius:12px}
+      .lang{padding:0 16px 14px; justify-content: center; margin-top: 10px;}
+      .sep{display:none}
+      .topbar-inner{width: 100%;}
+    }
+
+    /* ======= Hero ======= */
+    .hero{
+      position:relative; isolation:isolate;
+      min-height:62vh;
+      display:grid; place-items:center;
+      text-align:center; color:#fff;
+      background:
+        radial-gradient(1200px 600px at 50% -350px, rgba(199,154,74,.28), transparent 60%),
+        var(--deep-blue);
+    }
+    .hero::before{
+      content:""; position:absolute; inset:0; z-index:-1;
+      background:
+        linear-gradient(180deg, rgba(11,20,36,.10) 0%, rgba(11,20,36,.65) 70%, rgba(11,20,36,.85) 100%),
+        var(--cover-url) center / cover no-repeat;
+    }
+    .hero .wrap{padding:80px 20px 140px}
+    .eyebrow{
+      display:inline-block; padding:6px 12px; border-radius:999px;
+      background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25);
+      font-size:.9rem; letter-spacing:.08em; text-transform:uppercase;
+    }
+    .title{
+      font-size:clamp(30px, 5vw, 52px); letter-spacing:-.02em; margin:14px 0 8px;
+      font-weight:800;
+    }
+    .subtitle{font-size:clamp(16px, 2.2vw, 19px); opacity:.95; max-width:780px; margin:0 auto}
+    .hero-buttons{display:flex; gap:12px; justify-content:center; margin-top:22px; flex-wrap:wrap}
+    .btn{
+      display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.2); color:#fff; font-weight:600;
+      background:rgba(255,255,255,.08);
+      transition:transform .15s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.14); border-color:rgba(255,255,255,.35)}
+
+    /* Overlapping circular logo card */
+    .logo-card{
+      position:relative; display:grid; place-items:center;
+      width:148px; height:148px; border-radius:999px; margin:-74px auto 0;
+      background:#fff; box-shadow:var(--shadow); border:6px solid var(--bg);
+      overflow:hidden;
+    }
+    .logo-card img{ width:100%; height:100%; object-fit:cover }
+
+    /* ======= Sections ======= */
+    section{padding:72px 0}
+    .section-title{
+      font-size:clamp(22px, 3vw, 32px); margin:0 0 14px; font-weight:800; letter-spacing:-.01em;
+    }
+    .lead{color:var(--muted); font-size:1.05rem; max-width:860px}
+    .grid{display:grid; gap:20px}
+    @media (min-width: 860px){
+      .grid-3{grid-template-columns:repeat(3,1fr)}
+      .grid-2{grid-template-columns:1.1fr .9fr}
+    }
+    .card{
+      background:var(--panel); border-radius:var(--radius); padding:20px; border:1px solid var(--line);
+      box-shadow:0 14px 30px rgba(11,20,36,.06);
+    }
+    .badge{
+      display:inline-block; font-weight:700; font-size:.8rem; padding:6px 10px; border-radius:999px;
+      background:rgba(11,60,136,.08); color:var(--deep-blue);
+      border:1px solid rgba(11,60,136,.18);
+    }
+    .gold{ background:rgba(199,154,74,.12); color:#855e1f; border-color:rgba(199,154,74,.25) }
+    .link{color:var(--deep-blue); font-weight:700}
+
+    /* ======= News (auto-swiping horizontal rail) ======= */
+    .news{
+      overflow:hidden;
+    }
+    .rail{
+      position:relative;
+      mask-image: linear-gradient(to right, transparent 0, black 6%, black 94%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0, black 6%, black 94%, transparent 100%);
+    }
+    .track{
+      display:flex; gap:16px; align-items:stretch;
+      width:max-content;
+      animation: scroll-x 35s linear infinite;
+    }
+    .rail:hover .track{ animation-play-state: paused; }
+    @keyframes scroll-x{
+      from{ transform: translateX(0); }
+      to{ transform: translateX(-50%); }
+    }
+    .news-card{
+      flex:0 0 320px;
+      border:1px solid var(--line);
+      background:#fff; border-radius:16px; overflow:hidden;
+      box-shadow:0 10px 22px rgba(11,20,36,.06);
+      display:flex; flex-direction:column;
+    }
+    .news-media{ aspect-ratio:16/9; background:#e6ebf3 }
+    .news-body{ padding:14px 16px; display:flex; flex-direction:column; gap:6px }
+    .news-title{ font-weight:800; font-size:1.02rem; margin:0 }
+    .news-meta{ color:var(--muted); font-size:.9rem }
+    .news-body a{ margin-top:auto }
+
+    /* ======= Footer ======= */
+    footer{
+      background:linear-gradient(180deg, rgba(11,20,36,.04), rgba(11,20,36,.10));
+      border-top:1px solid var(--line); padding:30px 0 60px; color:var(--muted);
+    }
+    .foot-grid{display:grid; gap:16px}
+    @media (min-width:860px){ .foot-grid{ grid-template-columns: 1.2fr .8fr .8fr } }
+    .brand-mark{display:flex; align-items:center; gap:12px; font-weight:800; color:var(--ink)}
+    .brand-mark .chip{width:12px; height:12px; border-radius:999px; background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+    .read-more{display:inline-block;font-weight:700;text-decoration:none;border-bottom:2px solid currentColor;padding-bottom:2px;color:#0b3c88;          /* logo blue */}
+    .read-more:hover{ opacity:.85 }
+    .apply{float:right;}
+
+    /* ===== Team Section ===== */
+.team-section { padding: 72px 0 }
+.team-filters{
+  display:flex; flex-wrap:wrap; gap:10px; margin: 12px 0 20px;
+}
+.team-filters .chip{
+  border:1px solid var(--line);
+  background:#fff; color:var(--ink);
+  padding:8px 12px; border-radius:999px; font-weight:700; cursor:pointer;
+  transition:transform .15s ease, background .2s ease, border-color .2s ease;
+}
+.team-filters .chip:hover{ transform: translateY(-1px) }
+.team-filters .chip.active{
+  color:#fff;
+  background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold));
+  border-color:rgba(11,60,136,.35);
+}
+
+.team-grid{
+  display:grid; gap:20px;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+.member-card{
+  background:var(--panel); border:1px solid var(--line); border-radius:16px;
+  box-shadow:0 14px 30px rgba(11,20,36,.06);
+  padding:16px; display:flex; flex-direction:column; gap:8px;
+}
+.member-photo{
+  width:100%; aspect-ratio: 4/3; object-fit:cover;
+  border-radius:12px;
+}
+.member-name{ margin:6px 0 0; font-size:1.05rem; font-weight:800 }
+.member-role{ color:var(--deep-blue); font-weight:700; margin:0 }
+.member-bio{ color:var(--muted); margin:0 }
+.member-links{ display:flex; gap:12px; margin-top:auto }
+.member-links a{
+  color:var(--deep-blue); font-weight:700; text-decoration:none; border-bottom:2px solid currentColor; padding-bottom:2px;
+}
+
+  </style>
 </head>
 <body>
-  <p>If you’re not redirected, <a href="/file.pdf">click here</a>.</p>
+
+  <!-- ======= Top Bar ======= -->
+  <header class="topbar" id="topbar">
+    <div class="topbar-inner container">
+      <div class="brand"><span class="dot"></span> ABDS</div>
+
+      <div class="nav-wrap">
+        <button class="nav-toggle" id="navToggle" aria-controls="siteNav" aria-expanded="false">☰ Menu</button>
+        <div class="sep"></div>
+
+      </div>
+    </div>
+
+    <!-- Collapsible / Desktop Nav -->
+    <nav id="siteNav" aria-label="Primary">
+      <ul class="menu container">
+        <li><a href="about.html">About</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="report.html">Request Help</a></li>
+        <li><a href="activity.html">Get Involved</a></li>
+        <li><a href="team.html">Our Team</a></li>
+        <li><a class="cta" href="#contact">Contact</a></li>
+        <li>
+        <div class="lang" id="langBar" role="group" aria-label="Language selector">
+          <button data-lang="EN" class="active">EN</button>
+          <button data-lang="AL">AL</button>
+          <button data-lang="MK">MK</button>
+        </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ======= Hero ======= -->
+  <section class="hero" aria-label="Cover">
+    <div class="wrap container">
+      <span class="eyebrow" data-i18n="eyebrow">Equality • Justice • Community</span>
+      <h1 class="title" data-i18n="title">Together for Social Justice</h1>
+      <p class="subtitle" data-i18n="subtitle">We advocate for equal rights, fair opportunities, and access to justice. Our programs support communities through legal aid, education, and social inclusion.</p>
+      <div class="hero-buttons">
+        <a class="btn" href="report.html" aria-label="Explore our programs" data-i18n="btnPrograms">Our Programs</a>
+        <a class="btn" href="#involved" aria-label="See how to get involved" data-i18n="btnInvolved">Get Involved</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Overlapping circular logo -->
+  <div class="logo-card" aria-hidden="false">
+    <img src="logo.jpg" alt="Organization Logo">
+  </div>
+
+  <main>
+    <!-- ======= About ======= -->
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title" data-i18n="aboutTitle">About Us</h2>
+        <a href="about.html" class="read-more" data-i18n="readMore">Read more</a>
+        <p class="lead" data-i18n="aboutLead">The Association for Equality & Social Justice is a non-profit dedicated to advancing equality, protecting human rights, and promoting social justice across communities. We collaborate with grassroots groups, legal experts, educators, and volunteers to deliver impact where it matters most.</p>
+        <div class="grid grid-3" style="margin-top:14px">
+          <div class="card">
+            <span class="badge" data-i18n="mission">Mission</span>
+            <p data-i18n="missionTxt">To ensure equal access to justice and opportunity for every person—regardless of background, income, or identity.</p>
+          </div>
+          <div class="card">
+            <span class="badge gold" data-i18n="vision">Vision</span>
+            <p data-i18n="visionTxt">Inclusive societies where rights are respected, institutions are accountable, and communities thrive.</p>
+          </div>
+          <div class="card">
+            <span class="badge" data-i18n="values">Values</span>
+            <p data-i18n="valuesTxt">Fairness, dignity, transparency, and collaboration guide everything we do.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= News (auto horizontal swipe) ======= -->
+    <section id="news" class="news">
+      <div class="container">
+        <h2 class="section-title" data-i18n="newsTitle">News</h2>
+        <a href="news.html" class="read-more" data-i18n="readMore">Read more</a>
+        <p class="lead" data-i18n="newsLead">Highlights from our projects, community work, and policy efforts. The strip scrolls automatically—hover to pause.</p>
+      </div>
+
+      <!-- Infinite rail (duplicate sets for seamless loop) -->
+      <div class="rail" aria-hidden="false">
+        <div class="track">
+          <!-- Set A -->
+          <article class="news-card">
+            <div class="news-media" style="background-image:url('https://images.unsplash.com/photo-1565373670035-2a4e6a5c0f45?q=80&w=1200&auto=format&fit=crop'); background-size:cover; background-position:center;"></div>
+            <div class="news-body">
+              <span class="badge">Update</span>
+              <h3 class="news-title">Legal Aid Clinic Reaches 500+ Cases</h3>
+              <div class="news-meta">Oct 02, 2025 • Skopje</div>
+              <a class="link" href="#">Read more →</a>
+            </div>
+          </article>
+
+          <article class="news-card">
+            <div class="news-media" style="background-image:url('https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop'); background-size:cover; background-position:center;"></div>
+            <div class="news-body">
+              <span class="badge gold">Event</span>
+              <h3 class="news-title">Youth Rights Workshop in Tetovo</h3>
+              <div class="news-meta">Sep 15, 2025 • Tetovo</div>
+              <a class="link" href="#">See agenda →</a>
+            </div>
+          </article>
+
+          <article class="news-card">
+            <div class="news-media" style="background-image:url('https://images.unsplash.com/photo-1520975922325-24baf93843fd?q=80&w=1200&auto=format&fit=crop'); background-size:cover; background-position:center;"></div>
+            <div class="news-body">
+              <span class="badge">Report</span>
+              <h3 class="news-title">Policy Brief: Access to Public Services</h3>
+              <div class="news-meta">Aug 28, 2025 • Research</div>
+              <a class="link" href="#">Download (PDF) →</a>
+            </div>
+          </article>
+
+          <article class="news-card">
+            <div class="news-media" style="background-image:url('https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=1200&auto=format&fit=crop'); background-size:cover; background-position:center;"></div>
+            <div class="news-body">
+              <span class="badge gold">Announcement</span>
+              <h3 class="news-title">New Partnership for Women’s Empowerment</h3>
+              <div class="news-meta">Aug 03, 2025 • Nationwide</div>
+              <a class="link" href="#">Details →</a>
+            </div>
+          </article>
+
+          <!-- Duplicate Set B for seamless loop -->
+          <article class="news-card">
+            <div class="news-media" style="background-image:url('https://images.unsplash.com/photo-1565373670035-2a4e6a5c0f45?q=80&w=1200&auto=format&fit=crop'); background-size:cover; background-position:center;"></div>
+            <div class="news-body">
+              <span class="badge">Update</span>
+              <h3 class="news-title">Legal Aid Clinic Reaches 500+ Cases</h3>
+              <div class="news-meta">Oct 02, 2025 • Skopje</div>
+              <a class="link" href="#">Read more →</a>
+            </div>
+          </article>
+
+          <article class="news-card">
+            <div class="news-media" style="background-image:url('https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop'); background-size:cover; background-position:center;"></div>
+            <div class="news-body">
+              <span class="badge gold">Event</span>
+              <h3 class="news-title">Youth Rights Workshop in Tetovo</h3>
+              <div class="news-meta">Sep 15, 2025 • Tetovo</div>
+              <a class="link" href="#">See agenda →</a>
+            </div>
+          </article>
+
+          <article class="news-card">
+            <div class="news-media" style="background-image:url('https://images.unsplash.com/photo-1520975922325-24baf93843fd?q=80&w=1200&auto=format&fit=crop'); background-size:cover; background-position:center;"></div>
+            <div class="news-body">
+              <span class="badge">Report</span>
+              <h3 class="news-title">Policy Brief: Access to Public Services</h3>
+              <div class="news-meta">Aug 28, 2025 • Research</div>
+              <a class="link" href="#">Download (PDF) →</a>
+            </div>
+          </article>
+
+          <article class="news-card">
+            <div class="news-media" style="background-image:url('https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=1200&auto=format&fit=crop'); background-size:cover; background-position:center;"></div>
+            <div class="news-body">
+              <span class="badge gold">Announcement</span>
+              <h3 class="news-title">New Partnership for Women’s Empowerment</h3>
+              <div class="news-meta">Aug 03, 2025 • Nationwide</div>
+              <a class="link" href="#">Details →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= Programs ======= -->
+    <section id="programs">
+      <div class="container grid grid-2">
+        <div>
+          <h2 class="section-title" data-i18n="programsTitle">Programs</h2>
+          <p class="lead" data-i18n="programsLead">From legal aid to civic education, our initiatives are designed to remove barriers and empower people.</p>
+          <ul>
+            <li><strong data-i18n="p1h">Legal Aid & Counseling:</strong> <span data-i18n="p1t">Support for vulnerable individuals navigating legal processes.</span></li>
+            <li><strong data-i18n="p2h">Civic Education:</strong> <span data-i18n="p2t">Workshops on rights, duties, and participation in public life.</span></li>
+            <li><strong data-i18n="p3h">Social Inclusion Projects:</strong> <span data-i18n="p3t">Youth mentorship, women’s empowerment, and minority advocacy.</span></li>
+            <li><strong data-i18n="p4h">Policy & Research:</strong> <span data-i18n="p4t">Evidence-based recommendations to improve laws and services.</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="badge" data-i18n="spotlight">Spotlight</span>
+          <h3 data-i18n="clinicTitle">Center for Access to Justice</h3>
+          <p data-i18n="clinicTxt">Weekly sessions run by volunteer lawyers and social workers to provide timely assistance for housing, employment, and documentation issues.</p>
+          <p><a class="link" href="report.html" data-i18n="clinicCta">Ask about upcoming sessions →</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="involved">
+      <div class="container">
+        <h2 class="section-title">Get Involved</h2>
+        <p class="lead">Your time, skills, or donation can transform lives. Choose a path below to support our work.</p>
+        <div class="grid grid-3">
+          <div class="card">
+            <span class="badge gold">Volunteer</span>
+            <a href="activity.html" class="read-more apply" data-i18n="apply">Apply →</a>
+            <p>Join community outreach, translation, research, or event coordination teams.</p>
+          </div>
+          <div class="card">
+            <span class="badge">Partner</span>
+            <a href="activity.html" class="read-more apply" data-i18n="apply">Apply →</a>
+            <p>Collaborate on research, training, or service delivery with your organization or school.</p>
+          </div>
+          <div class="card">
+            <span class="badge gold">Donate</span>
+            <a href="activity.html" class="read-more apply" data-i18n="apply">Apply →</a>
+            <p>Help us fund legal aid hours, educational materials, and emergency support.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!-- ===== Team / Staff ===== -->
+<section id="team" class="team-section">
+  <div class="container">
+    <h2 class="section-title" data-i18n="teamTitle">Our Team</h2>
+    <a href="team.html" class="read-more" data-i18n="readMore">Read more</a>
+    <p class="lead" data-i18n="teamLead">
+      People dedicated to equality, justice, and inclusion.
+    </p>
+
+    <!-- Optional filters -->
+    <!-- <div class="team-filters" role="tablist" aria-label="Departments">
+      <button class="chip active" data-filter="all" data-i18n-team="filterAll">All</button>
+      <button class="chip" data-filter="leadership" data-i18n-team="filterLeadership">Leadership</button>
+      <button class="chip" data-filter="legal" data-i18n-team="filterLegal">Legal</button>
+      <button class="chip" data-filter="education" data-i18n-team="filterEducation">Education</button>
+      <button class="chip" data-filter="operations" data-i18n-team="filterOperations">Operations</button>
+    </div> -->
+
+    <div class="team-grid">
+      <!-- Card -->
+      <article class="member-card" data-dept="leadership">
+        <img class="member-photo" src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=800&auto=format&fit=crop" alt="Executive Director">
+        <h3 class="member-name">Elena Petrova</h3>
+        <p class="member-role" data-i18n="roleExecutive">Executive Director</p>
+        <p class="member-bio">
+          Oversees strategy, partnerships, and impact across programs.
+        </p>
+        <div class="member-links">
+          <a href="mailto:elena@example.org" aria-label="Email">Email</a>
+        </div>
+      </article>
+
+      <article class="member-card" data-dept="legal">
+        <img class="member-photo" src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=800&auto=format&fit=crop" alt="Senior Legal Advisor">
+        <h3 class="member-name">Arben Ismaili</h3>
+        <p class="member-role" data-i18n="roleSeniorLegal">Senior Legal Advisor</p>
+        <p class="member-bio">
+          Legal counseling and representation for vulnerable individuals.
+        </p>
+        <div class="member-links">
+          <a href="mailto:arben@example.org" aria-label="Email">Email</a>
+        </div>
+      </article>
+
+      <article class="member-card" data-dept="education">
+        <img class="member-photo" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop" alt="Civic Education Lead">
+        <h3 class="member-name">Mira Jovanovska</h3>
+        <p class="member-role" data-i18n="roleCivicLead">Civic Education Lead</p>
+        <p class="member-bio">
+          Designs workshops on rights, duties, and participation.
+        </p>
+        <div class="member-links">
+          <a href="mailto:mira@example.org" aria-label="Email">Email</a>
+        </div>
+      </article>
+
+      <article class="member-card" data-dept="operations">
+        <img class="member-photo" src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=800&auto=format&fit=crop" alt="Operations Manager">
+        <h3 class="member-name">Nikola Trajkov</h3>
+        <p class="member-role" data-i18n="roleOps">Operations Manager</p>
+        <p class="member-bio">
+          Coordinates outreach logistics, volunteers, and events.
+        </p>
+        <div class="member-links">
+          <a href="mailto:nikola@example.org" aria-label="Email">Email</a>
+        </div>
+      </article>
+
+      <!-- Duplicate / add more cards as needed -->
+    </div>
+  </div>
+</section>
+
+
+
+    <!-- ======= Contact ======= -->
+    <section id="contact">
+      <div class="container grid grid-2">
+        <div>
+          <h2 class="section-title" data-i18n="contactTitle">Contact</h2>
+          <p class="lead" data-i18n="contactLead">Have questions or want to collaborate? Send us a message.</p>
+          <form class="card" onsubmit="event.preventDefault(); alert('Form submission is a demo. Connect your backend or a service like Formspree.');">
+            <div style="display:grid; gap:12px;">
+              <label>
+                <span style="display:block; font-weight:600; margin-bottom:6px;" data-i18n="fullName">Full Name</span>
+                <input type="text" required placeholder="Your name" style="width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:12px; font:inherit;">
+              </label>
+              <label>
+                <span style="display:block; font-weight:600; margin-bottom:6px;" data-i18n="email">Email</span>
+                <input type="email" required placeholder="you@example.org" style="width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:12px; font:inherit;">
+              </label>
+              <label>
+                <span style="display:block; font-weight:600; margin-bottom:6px;" data-i18n="message">Message</span>
+                <textarea required rows="5" placeholder="How can we help?" style="width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:12px; font:inherit; resize:vertical;"></textarea>
+              </label>
+              <button class="cta" type="submit" style="border:none; cursor:pointer; width:max-content" data-i18n="send">Send</button>
+            </div>
+          </form>
+        </div>
+        <div class="card">
+          <span class="badge" data-i18n="details">Details</span>
+          <p><strong>Association for Equality & Social Justice</strong><br>
+             Skopje, North Macedonia<br>
+             <span data-i18n="hours">Mon–Fri: 09:00–17:00</span></p>
+          <p><a class="link" href="mailto:contact@example.org">contact@example.org</a><br>
+             +389 (0)2 000 000</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer>
+    <div class="container foot-grid">
+      <div>
+        <div class="brand-mark"><span class="chip"></span> Association for Equality & Social Justice</div>
+        <p style="margin:10px 0 0">© <span id="y"></span> All rights reserved.</p>
+      </div>
+      <div>
+        <strong>Explore</strong>
+        <ul style="list-style:none; padding:0; margin:10px 0 0; display:grid; gap:8px">
+          <li><a class="link" href="about.html">About</a></li>
+          <li><a class="link" href="news.html">News</a></li>
+          <li><a class="link" href="report.html">Request Help</a></li>
+          <li><a class="link" href="activity.html">Get Involved</a></li>
+          <li><a class="link" href="team.html">Our Team</a></li>
+        </ul>
+      </div>
+      <div>
+        <strong>Connect</strong>
+        <ul style="list-style:none; padding:0; margin:10px 0 0; display:grid; gap:8px">
+          <li><a class="link" href="mailto:contact@example.org">Email</a></li>
+          <li><a class="link" href="#">Facebook</a></li>
+          <li><a class="link" href="#">Instagram</a></li>
+          <li><a class="link" href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Year + sticky shrink
+    const tb = document.getElementById('topbar');
+    document.getElementById('y').textContent = new Date().getFullYear();
+    const onScroll = () => { if (window.scrollY > 12) tb.classList.add('shrink'); else tb.classList.remove('shrink'); };
+    onScroll(); window.addEventListener('scroll', onScroll);
+
+    // ===== Mobile nav toggle
+    const nav = document.getElementById('siteNav');
+    const btn = document.getElementById('navToggle');
+    btn.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    // Close nav when clicking a link (mobile)
+    nav.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A' && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // ===== Simple i18n (static strings demo)
+    const strings = {
+      EN:{
+        eyebrow:"Equality • Justice • Community",
+        title:"Together for Social Justice",
+        subtitle:"We advocate for equal rights, fair opportunities, and access to justice. Our programs support communities through legal aid, education, and social inclusion.",
+        btnInvolved:"Get Involved",
+        btnPrograms:"Request Help",
+        aboutTitle:"About Us",
+        aboutLead:"The Association for Equality & Social Justice is a non-profit dedicated to advancing equality, protecting human rights, and promoting social justice across communities. We collaborate with grassroots groups, legal experts, educators, and volunteers to deliver impact where it matters most.",
+        mission:"Mission", missionTxt:"To ensure equal access to justice and opportunity for every person—regardless of background, income, or identity.",
+        vision:"Vision", visionTxt:"Inclusive societies where rights are respected, institutions are accountable, and communities thrive.",
+        values:"Values", valuesTxt:"Fairness, dignity, transparency, and collaboration guide everything we do.",
+        newsTitle:"News", newsLead:"Highlights from our projects, community work, and policy efforts. The strip scrolls automatically—hover to pause.",
+        programsTitle:"Programs", programsLead:"From legal aid to civic education, our initiatives are designed to remove barriers and empower people.",
+        p1h:"Legal Aid & Counseling:", p1t:"Support for vulnerable individuals navigating legal processes.",
+        p2h:"Civic Education:", p2t:"Workshops on rights, duties, and participation in public life.",
+        p3h:"Social Inclusion Projects:", p3t:"Youth mentorship, women’s empowerment, and minority advocacy.",
+        p4h:"Policy & Research:", p4t:"Evidence-based recommendations to improve laws and services.",
+        spotlight:"Spotlight", clinicTitle:"Center for Access to Justice", clinicTxt:"Our center provides continuous support to anyone facing injustice, discrimination, or social challenges. You can contact us for legal aid, social justice advice, or to anonymously report violations, corruption, or abuse. Every case is handled with confidentiality and respect.", clinicCta:"Request help →",
+        involvedTitle:"Get Involved", involvedLead:"Your time, skills, or donation can transform lives. Choose a path below to support our work.",
+        volunteer:"Volunteer", volunteerTxt:"Join community outreach, translation, research, or event coordination teams.",
+        partner:"Partner", partnerTxt:"Collaborate on research, training, or service delivery with your organization or school.",
+        donate:"Donate", donateTxt:"Help us fund legal aid hours, educational materials, and emergency support.",
+        contactTitle:"Contact", contactLead:"Have questions or want to collaborate? Send us a message.",
+        fullName:"Full Name", email:"Email", message:"Message", send:"Send", details:"Details", hours:"Mon–Fri: 09:00–17:00",
+        readMore:"Read more →",
+        apply:"Apply →",
+              teamTitle: "Our Team",
+      teamLead: "People dedicated to equality, justice, and inclusion.",
+      filterAll: "All", filterLeadership: "Leadership", filterLegal: "Legal",
+      filterEducation: "Education", filterOperations: "Operations",
+      roleExecutive: "Executive Director",
+      roleSeniorLegal: "Senior Legal Advisor",
+      roleCivicLead: "Civic Education Lead",
+      roleOps: "Operations Manager",
+    },
+      AL:{
+        eyebrow:"Barazi • Drejtësi • Komunitet",
+        title:"Së bashku për Drejtësi Sociale",
+        subtitle:"Avokojmë për të drejta të barabarta, mundësi të drejta dhe qasje në drejtësi. Programet tona mbështesin komunitetet përmes ndihmës juridike, edukimit dhe përfshirjes sociale.",
+        btnInvolved:"Përfshihu",
+        btnPrograms:"Kërko Ndihmë",
+        aboutTitle:"Rreth Nesh",
+        aboutLead:"Shoqata për Barazi dhe Drejtësi Sociale është organizatë jofitimprurëse e përkushtuar për avancimin e barazisë, mbrojtjen e të drejtave të njeriut dhe promovimin e drejtësisë sociale.",
+        mission:"Misioni", missionTxt:"Të sigurojmë qasje të barabartë në drejtësi dhe mundësi për çdo person—pavarësisht prejardhjes ose të ardhurave.",
+        vision:"Vizioni", visionTxt:"Shoqëri gjithëpërfshirëse ku të drejtat respektohen dhe institucionet janë të llogaridhënshme.",
+        values:"Vlerat", valuesTxt:"Dinjiteti, drejtësia, transparenca dhe bashkëpunimi.",
+        newsTitle:"Lajme", newsLead:"Momente kryesore nga projektet dhe puna jonë me komunitetin. Brezi lëviz automatikisht—mbaje maus-in për ta ndalur.",
+        programsTitle:"Programet", programsLead:"Nga ndihma juridike te edukimi qytetar, nismat tona fuqizojnë njerëzit.",
+        p1h:"Ndihmë Juridike:", p1t:"Përkrahje për persona në nevojë gjatë proceseve ligjore.",
+        p2h:"Edukimi Qytetar:", p2t:"Punëtori për të drejtat/detyrimet dhe pjesëmarrjen publike.",
+        p3h:"Përfshirja Sociale:", p3t:"Mentorim të rinjsh, fuqizim i grave dhe avokim për pakicat.",
+        p4h:"Politika & Kërkim:", p4t:"Rekomandime të bazuara në të dhëna për përmirësimin e ligjeve dhe shërbimeve.",
+        spotlight:"Në qendër", clinicTitle:"Qendra për Qasje në Drejtësi", clinicTxt:"Qendra jonë ofron ndihmë të vazhdueshme për këdo që përballet me padrejtësi, diskriminim apo vështirësi sociale. Mund të na kontaktoni për ndihmë ligjore, këshilla për drejtësi sociale, ose për të raportuar në mënyrë anonime shkelje, korrupsion apo dhunë. Çdo rast trajtohet me konfidencialitet dhe respekt.", clinicCta:"Kërko ndihmë →",
+        involvedTitle:"Përfshihu", involvedLead:"Koha, aftësitë ose donacioni yt mund të ndryshojnë jetë.",
+        volunteer:"Vullnetar", volunteerTxt:"Bashkohu në terren, përkthim, kërkim ose organizim eventesh.",
+        partner:"Partneritet", partnerTxt:"Bashkëpunime për kërkim, trajnime ose shërbime.",
+        donate:"Dhurim", donateTxt:"Mbështet orë ndihme juridike dhe materiale edukimi.",
+        contactTitle:"Kontakt", contactLead:"Ke pyetje? Na shkruaj.",
+        fullName:"Emri i Plotë", email:"Email", message:"Mesazhi", send:"Dërgo", details:"Detaje", hours:"Hë–Pr: 09:00–17:00",
+        readMore:"Lexo më shumë →",
+        apply:"Apliko →",
+              teamTitle: "Ekipi Ynë",
+      teamLead: "Njerëz të përkushtuar për barazi, drejtësi dhe përfshirje.",
+      filterAll: "Të gjitha", filterLeadership: "Udhëheqje", filterLegal: "Juridike",
+      filterEducation: "Edukimi", filterOperations: "Operacione",
+      roleExecutive: "Drejtoreshë Ekzekutive",
+      roleSeniorLegal: "Këshilltar i Lartë Ligjor",
+      roleCivicLead: "Drejtues i Edukimit Qytetar",
+      roleOps: "Menaxher i Operacioneve",
+    },
+      MK:{
+        eyebrow:"Еднаквост • Правда • Заедница",
+        title:"Заедно за социјална правда",
+        subtitle:"Се залагаме за еднакви права, фер можности и пристап до правда. Програмите поддржуваат заедници преку правна помош, едукација и инклузија.",
+        btnInvolved:"Вклучи се",
+        btnPrograms:"Побарај Помош",
+        aboutTitle:"За нас",
+        aboutLead:"Здружение за Еднаквост и Социјална Правда – непрофитна организација посветена на заштита на човековите права и општествена правда.",
+        mission:"Мисија", missionTxt:"Еднаква пристапност до правда и можности за секого.",
+        vision:"Визија", visionTxt:"Инклузивни општества со одговорни институции.",
+        values:"Вредности", valuesTxt:"Фер однесување, достоинство, транспарентност и соработка.",
+        newsTitle:"Вести", newsLead:"Истакнати активности и настани. Лентата лизга автоматски—задржи глушец за пауза.",
+        programsTitle:"Програми", programsLead:"Од правна помош до граѓанско образование – иницијативи што ослободуваат бариери.",
+        p1h:"Правна помош:", p1t:"Поддршка за ранливи лица низ правни постапки.",
+        p2h:"Граѓанско образование:", p2t:"Работилници за права, обврски и учество во јавниот живот.",
+        p3h:"Социјална инклузија:", p3t:"Менторство за млади, оснажување на жени и застапување на малцинства.",
+        p4h:"Политики и истражувања:", p4t:"Препораки базирани на докази за подобри закони и услуги.",
+        spotlight:"Во фокус", clinicTitle:"Центар за Пристап до Правда", clinicTxt:"Нашиот центар нуди постојана поддршка за сите кои се соочуваат со неправда, дискриминација или други социјални предизвици. Може да ни се обратите за правна помош, совети поврзани со социјална правда, или анонимно пријавување на прекршок, корупција или насилство. Секој случај се третира со доверливост и почит.", clinicCta:"Побарај помош →",
+        involvedTitle:"Вклучи се", involvedLead:"Твоето време, вештини или донација прават разлика.",
+        volunteer:"Волонтирај", volunteerTxt:"Терен, превод, истражување или организација на настани.",
+        partner:"Партнерство", partnerTxt:"Соработка за истражувања, обуки или услуги.",
+        donate:"Донирај", donateTxt:"Поддржи правна помош и едукативни материјали.",
+        contactTitle:"Контакт", contactLead:"Имате прашања? Пишете ни.",
+        fullName:"Име и презиме", email:"Е-пошта", message:"Порака", send:"Испрати", details:"Детали", hours:"Пон–Пет: 09:00–17:00",
+        readMore:"Прочитај повеќе →",
+        apply:"Аплицирај →",
+              teamTitle: "Нашата Екипа",
+      teamLead: "Луѓе посветени на еднаквост, правда и инклузија.",
+      filterAll: "Сите", filterLeadership: "Раководство", filterLegal: "Правна",
+      filterEducation: "Едукација", filterOperations: "Операции",
+      roleExecutive: "Извршна директорка",
+      roleSeniorLegal: "Старши правен советник",
+      roleCivicLead: "Раководител за граѓанско образование",
+      roleOps: "Менаџер за операции",
+      }
+    };
+
+    function setLang(code){
+      const pack = strings[code] || strings.EN;
+      document.documentElement.setAttribute('data-lang', code);
+      // update active button
+      document.querySelectorAll('#langBar button').forEach(b=>{
+        b.classList.toggle('active', b.dataset.lang===code);
+      });
+      // replace texts for nodes with data-i18n
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key = el.getAttribute('data-i18n');
+        if(pack[key]) el.textContent = pack[key];
+      });
+      localStorage.setItem('lang', code);
+    }
+    // init language
+    const saved = localStorage.getItem('lang') || 'EN';
+    setLang(saved);
+    document.getElementById('langBar').addEventListener('click', (e)=>{
+      if(e.target.matches('button[data-lang]')) setLang(e.target.dataset.lang);
+    });
+
+    // ===== Touch drag support for News rail (optional manual swipe)
+    const rail = document.querySelector('.rail');
+    let isDown=false, startX=0, scrollX=0;
+    rail.addEventListener('pointerdown', e=>{ isDown=true; startX=e.clientX; rail.style.cursor='grabbing'; e.preventDefault(); });
+    window.addEventListener('pointerup', ()=>{ isDown=false; rail.style.cursor='default'; });
+    window.addEventListener('pointermove', e=>{
+      if(!isDown) return;
+      // Temporarily pause CSS animation and translate via scrollLeft emulation
+      const track = rail.querySelector('.track');
+      track.style.animationPlayState='paused';
+      const delta=(e.clientX-startX);
+      track.style.transform=`translateX(calc(var(--drag,0px) + ${delta}px))`;
+    });
+    window.addEventListener('pointerup', ()=>{
+      const track = rail.querySelector('.track');
+      track.style.transform='';
+      track.style.removeProperty('--drag');
+      track.style.animationPlayState='running';
+    });
+  </script>
 </body>
 </html>

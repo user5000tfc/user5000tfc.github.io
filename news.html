@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="EN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ABDS — News</title>
+  <meta name="description" content="ABDS News">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --deep-blue:#0b3c88;  /* primary */
+      --warm-gold:#c79a4a;  /* accent */
+      --ink:#0b1424;        /* text */
+      --muted:#5c6b7e;
+      --panel:#ffffff;
+      --bg:#f6f8fb;
+      --line:rgba(11,20,36,.10);
+      --shadow:0 18px 60px rgba(11,20,36,.15);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+      line-height:1.55;
+    }
+    img{display:block;max-width:100%}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin-inline:auto;padding:0 20px}
+
+    /* ======= Header / Nav (same as before) ======= */
+    .topbar{
+      position:sticky; top:0; z-index:60;
+      background:rgba(255,255,255,.85);
+      backdrop-filter:saturate(140%) blur(8px);
+      border-bottom:1px solid var(--line);
+      transition:all .25s ease;
+      display:flex; justify-content:space-between;
+    }
+    .topbar.shrink{padding-block:6px;}
+    .topbar-inner{display:flex;align-items:center;justify-content:space-between; gap:16px; padding:12px 20px; margin:0;}
+    .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.01em}
+    .brand .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+    nav{display:flex; align-items:center; gap:14px}
+    .menu{display:flex; gap:10px; list-style:none; padding:0; margin:0;}
+    .menu a{
+      padding:8px 12px; border-radius:999px; font-weight:600; font-size:.95rem;
+      transition:transform .15s ease, background .2s ease;
+    }
+    .menu a:hover{background:rgba(199,154,74,.12); transform:translateY(-1px)}
+    .cta{
+      padding:10px 14px; border-radius:999px; font-weight:700;
+      background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold));
+      color:#fff; box-shadow:0 10px 24px rgba(11,60,136,.25);
+    }
+    .lang{display:flex; align-items:center; gap:6px; padding-left:6px}
+    .lang button{
+      border:1px solid var(--line);
+      background:#fff; padding:6px 10px; border-radius:999px; font-weight:700; cursor:pointer;
+    }
+    .lang button.active{border-color:rgba(11,60,136,.35); color:#fff; background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+    .sep{width:1px; height:22px; background:var(--line)}
+    .nav-toggle{
+      display:none; appearance:none; border:1px solid var(--line); background:#fff;
+      padding:8px 10px; border-radius:12px; font-weight:800;
+    }
+    .nav-wrap{display:flex; align-items:center; gap:12px}
+
+    @media (max-width: 860px){
+      .nav-toggle{display:inline-flex}
+      nav{position:fixed; inset:auto 0 0 0; top:60px; background:#fff; border-top:1px solid var(--line);
+           display:none; z-index:55}
+      nav.open{display:block}
+      .menu{flex-direction:column; padding:14px 16px; background-color:#fffffff7; text-align:center;}
+      .menu a{padding:12px 14px; border-radius:12px}
+      .lang{padding:0 16px 14px; justify-content:center; margin-top:10px;}
+      .sep{display:none}
+      .topbar-inner{width:100%;}
+    }
+
+    /* ======= News page ======= */
+    .section{padding:72px 0}
+    .page-header{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .page-title{
+      font-size:clamp(28px,4.5vw,44px); font-weight:800; letter-spacing:-.01em; margin:0;
+    }
+    .btn-ghost{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 14px; border-radius:12px;
+      border:1px solid var(--line); background:#fff; font-weight:700;
+    }
+
+    /* Hero (latest) */
+    .hero-news{
+      position:relative; border-radius:16px; overflow:hidden;
+      border:1px solid var(--line); box-shadow:0 18px 45px rgba(11,20,36,.08);
+      color:#fff; margin-bottom:20px;
+      background:#0b264f;
+    }
+    .hero-media{
+      position:absolute; inset:0; z-index:0;
+      background-size:cover; background-position:center;
+      filter:saturate(1.05);
+    }
+    .hero-overlay{
+      position:absolute; inset:0; z-index:1;
+      background:linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.65) 70%, rgba(0,0,0,.75));
+    }
+    .hero-body{
+      position:relative; z-index:2; padding:26px 20px 28px;
+      display:grid; gap:8px; min-height:320px; align-content:end;
+    }
+    .hero-kicker{display:inline-block; font-weight:800; letter-spacing:.06em; text-transform:uppercase; opacity:.95}
+    .hero-title{font-size:clamp(22px,3.8vw,36px); font-weight:800; margin:0}
+    .hero-excerpt{max-width:820px; opacity:.95}
+    .hero-meta{opacity:.9; font-weight:600}
+    .hero-actions{display:flex; gap:10px; flex-wrap:wrap}
+    .btn{
+      display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.25); color:#fff; font-weight:700;
+      background:rgba(255,255,255,.08);
+    }
+    .btn:hover{background:rgba(255,255,255,.16)}
+
+    /* Grid */
+    .grid{
+      display:grid; gap:18px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .news-card{
+      display:flex; flex-direction:column; gap:10px;
+      background:var(--panel); border:1px solid var(--line); border-radius:16px;
+      box-shadow:0 10px 24px rgba(11,20,36,.06);
+      overflow:hidden; min-height:100%;
+    }
+    .news-media{ aspect-ratio:16/9; background:#e7ecf5; background-size:cover; background-position:center; }
+    .news-body{ padding:14px 16px; display:flex; flex-direction:column; gap:8px; flex:1; }
+    .news-title{ font-weight:800; font-size:1.05rem; margin:0; }
+    .news-excerpt{ color:var(--muted); margin:0 0 6px; }
+    .news-meta{ color:var(--muted); font-size:.9rem; margin-top:auto; }
+    .link{
+      display:inline-block; font-weight:800; color:var(--deep-blue);
+      text-decoration:none; border-bottom:2px solid currentColor; padding-bottom:2px;
+      margin-top:6px;
+    }
+
+    footer{
+      background:linear-gradient(180deg, rgba(11,20,36,.04), rgba(11,20,36,.10));
+      border-top:1px solid var(--line); padding:30px 0 60px; color:var(--muted);
+      margin-top:64px;
+    }
+    .foot-grid{display:grid; gap:16px}
+    @media (min-width:860px){ .foot-grid{ grid-template-columns:1.2fr .8fr .8fr } }
+    .brand-mark{display:flex; align-items:center; gap:12px; font-weight:800; color:var(--ink)}
+    .brand-mark .chip{width:12px; height:12px; border-radius:999px; background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+  </style>
+</head>
+<body>
+
+  <!-- ======= Top Bar ======= -->
+  <header class="topbar" id="topbar">
+    <div class="topbar-inner container">
+      <div class="brand"><span class="dot"></span> ABDS</div>
+
+      <div class="nav-wrap">
+        <button class="nav-toggle" id="navToggle" aria-controls="siteNav" aria-expanded="false">☰ Menu</button>
+        <div class="sep"></div>
+      </div>
+    </div>
+
+    <!-- Collapsible / Desktop Nav -->
+    <nav id="siteNav" aria-label="Primary">
+      <ul class="menu container">
+        <li><a href="about.html" data-i18n-news="navAbout">About</a></li>
+        <li><a href="news.html" data-i18n-news="navNews">News</a></li>
+        <li><a href="report.html" data-i18n-news="navPrograms">Request Help</a></li>
+        <li><a href="activity.html" data-i18n-news="navInvolved">Get Involved</a></li>
+        <li><a href="team.html" data-i18n-news="navTeam">Our Team</a></li>
+        <li><a class="cta" href="index.html#contact" data-i18n-news="navContact">Contact</a></li>
+        <li>
+          <div class="lang" id="langBar" role="group" aria-label="Language selector">
+            <button data-lang="EN" class="active">EN</button>
+            <button data-lang="AL">AL</button>
+            <button data-lang="MK">MK</button>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ======= News Page ======= -->
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="page-header">
+          <h1 class="page-title" data-i18n-news="pageTitle">News</h1>
+          <a class="btn-ghost" href="index.html" data-i18n-news="backHome">← Back to Home</a>
+        </div>
+
+        <!-- Latest (hero) -->
+        <article class="hero-news" id="heroNews" hidden>
+          <div class="hero-media" id="heroMedia"></div>
+          <div class="hero-overlay"></div>
+          <div class="hero-body">
+            <span class="hero-kicker" id="heroKicker">Latest</span>
+            <h2 class="hero-title" id="heroTitle">—</h2>
+            <p class="hero-excerpt" id="heroExcerpt">—</p>
+            <div class="hero-meta" id="heroMeta">—</div>
+            <div class="hero-actions">
+              <a class="btn" id="heroBtn" href="#" data-i18n-news="readMore">Read more</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- More news grid -->
+        <div class="grid" id="newsGrid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer>
+    <div class="container foot-grid">
+      <div>
+        <div class="brand-mark"><span class="chip"></span> Association for Equality & Social Justice</div>
+        <p style="margin:10px 0 0">© <span id="y"></span> All rights reserved.</p>
+      </div>
+      <div>
+        <strong data-i18n-news="footExplore">Explore</strong>
+        <ul style="list-style:none; padding:0; margin:10px 0 0; display:grid; gap:8px">
+          <li><a href="about.html" class="link" data-i18n-news="navAbout">About</a></li>
+          <li><a href="news.html" class="link" data-i18n-news="navNews">News</a></li>
+          <li><a href="report.html" class="link" data-i18n-news="navPrograms">Request Help</a></li>
+          <li><a href="activity.html" class="link" data-i18n-news="navInvolved">Get Involved</a></li>
+          <li><a class="link" href="team.html">Our Team</a></li>
+        </ul>
+      </div>
+      <div>
+        <strong data-i18n-news="footConnect">Connect</strong>
+        <ul style="list-style:none; padding:0; margin:10px 0 0; display:grid; gap:8px">
+          <li><a class="link" href="mailto:contact@example.org">Email</a></li>
+          <li><a class="link" href="#">Facebook</a></li>
+          <li><a class="link" href="#">Instagram</a></li>
+          <li><a class="link" href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======= News Data (Edit here) ======= -->
+  <script id="news-data" type="application/json">
+  [
+    {
+      "date":"2025-10-28",
+      "image":"https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1600&auto=format&fit=crop",
+      "url":"#",
+      "category":{"EN":"Update","AL":"Përditësim","MK":"Ажурирање"},
+      "title":{
+        "EN":"ABDS Launches Community Legal Hotlines",
+        "AL":"ABDS nis linja të nxehta ligjore për komunitetin",
+        "MK":"АБДС започнува заеднички правни линии"
+      },
+      "excerpt":{
+        "EN":"Faster access to first and second-tier legal help across the country.",
+        "AL":"Qasje më e shpejtë në ndihmë juridike në gjithë vendin.",
+        "MK":"Побрз пристап до примарна и секундарна правна помош низ државата."
+      },
+      "place":{"EN":"Skopje","AL":"Shkup","MK":"Скопје"}
+    },
+    {
+      "date":"2025-09-14",
+      "image":"https://images.unsplash.com/photo-1520975922325-24baf93843fd?q=80&w=1600&auto=format&fit=crop",
+      "url":"#",
+      "category":{"EN":"Report","AL":"Raport","MK":"Извештај"},
+      "title":{
+        "EN":"Policy Brief: Equal Access to Public Services",
+        "AL":"Raport Politikash: Qasje e Barabartë në Shërbimet Publike",
+        "MK":"Политички бриф: Еднаква пристапност до јавни услуги"
+      },
+      "excerpt":{
+        "EN":"Recommendations for municipalities to remove structural barriers.",
+        "AL":"Rekomandime për komunat për heqjen e barrierave strukturore.",
+        "MK":"Препораки за општините за отстранување на структурни бариери."
+      },
+      "place":{"EN":"Research","AL":"Kërkim","MK":"Истражување"}
+    },
+    {
+      "date":"2025-08-19",
+      "image":"https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=1600&auto=format&fit=crop",
+      "url":"#",
+      "category":{"EN":"Announcement","AL":"Njoftim","MK":"Соопштение"},
+      "title":{
+        "EN":"New Partnership for Women’s Empowerment",
+        "AL":"Partneritet i ri për fuqizimin e grave",
+        "MK":"Ново партнерство за оснажување на жените"
+      },
+      "excerpt":{
+        "EN":"Joint programs with local NGOs to expand mentorship.",
+        "AL":"Programe të përbashkëta me OJQ lokale për mentorim.",
+        "MK":"Заеднички програми со локални НВО за менторство."
+      },
+      "place":{"EN":"Nationwide","AL":"Mbarë vendi","MK":"Низ државата"}
+    },
+    {
+      "date":"2025-08-02",
+      "image":"https://images.unsplash.com/photo-1565373670035-2a4e6a5c0f45?q=80&w=1600&auto=format&fit=crop",
+      "url":"#",
+      "category":{"EN":"Event","AL":"Ngjarje","MK":"Настан"},
+      "title":{
+        "EN":"Youth Rights Workshop in Tetovo",
+        "AL":"Punëtori për të Drejtat e të Rinjve në Tetovë",
+        "MK":"Работилница за младински права во Тетово"
+      },
+      "excerpt":{
+        "EN":"Hands-on training on rights, duties, and participation.",
+        "AL":"Trajnim praktik për të drejta, detyrime dhe pjesëmarrje.",
+        "MK":"Практична обука за права, обврски и учество."
+      },
+      "place":{"EN":"Tetovo","AL":"Tetovë","MK":"Тетово"}
+    }
+  ]
+  </script>
+
+  <script>
+    // ===== Year + sticky shrink
+    const tb = document.getElementById('topbar');
+    document.getElementById('y').textContent = new Date().getFullYear();
+    const onScroll = () => { if (window.scrollY > 12) tb.classList.add('shrink'); else tb.classList.remove('shrink'); };
+    onScroll(); window.addEventListener('scroll', onScroll);
+
+    // ===== Mobile nav toggle
+    const nav = document.getElementById('siteNav');
+    const btn = document.getElementById('navToggle');
+    btn.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    nav.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A' && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // ===== i18n strings (News page)
+    const STR = {
+      EN:{
+        pageTitle:"News", backHome:"← Back to Home",
+        navAbout:"About", navNews:"News", navPrograms:"Request Help", navInvolved:"Get Involved", navTeam:"Our Team", navContact:"Contact",
+        readMore:"Read more", latest:"Latest", footExplore:"Explore", footConnect:"Connect"
+      },
+      AL:{
+        pageTitle:"Lajme", backHome:"← Kthehu në Faqen Kryesore",
+        navAbout:"Rreth Nesh", navNews:"Lajme", navPrograms:"Kërko Ndihmë", navInvolved:"Përfshihu", navTeam:"Ekipi Ynë", navContact:"Kontakt",
+        readMore:"Lexo më shumë", latest:"Më e reja", footExplore:"Eksploro", footConnect:"Lidhu"
+      },
+      MK:{
+        pageTitle:"Вести", backHome:"← Назад кон Почетна",
+        navAbout:"За нас", navNews:"Вести", navPrograms:"Побарај Помош", navInvolved:"Вклучи се", navTeam:"Нашата Екипа", navContact:"Контакт",
+        readMore:"Прочитај повеќе", latest:"Најново", footExplore:"Истражи", footConnect:"Поврзи се"
+      }
+    };
+
+    function applyNewsLang(code){
+      const pack = STR[code] || STR.EN;
+      document.documentElement.setAttribute('data-lang', code);
+      // header/footer labels
+      document.querySelectorAll('[data-i18n-news]').forEach(el=>{
+        const k = el.getAttribute('data-i18n-news');
+        if (pack[k]) el.textContent = pack[k];
+      });
+      // hero button text
+      const heroBtn = document.getElementById('heroBtn');
+      if (heroBtn) heroBtn.textContent = pack.readMore;
+      // hero kicker
+      const hk = document.getElementById('heroKicker');
+      if (hk) hk.textContent = pack.latest;
+      // update rendered articles' titles/excerpts
+      updateRenderedLang(code);
+    }
+
+    // ===== Build News from JSON
+    const raw = document.getElementById('news-data').textContent.trim();
+    const news = JSON.parse(raw)
+      .map(n => ({...n, time: new Date(n.date).getTime()}))
+      .sort((a,b)=> b.time - a.time);
+
+    const hero = news[0];
+    const rest = news.slice(1);
+
+    const heroEl = document.getElementById('heroNews');
+    const heroMedia = document.getElementById('heroMedia');
+    const heroTitle = document.getElementById('heroTitle');
+    const heroExcerpt = document.getElementById('heroExcerpt');
+    const heroMeta = document.getElementById('heroMeta');
+    const heroBtn = document.getElementById('heroBtn');
+    const grid = document.getElementById('newsGrid');
+
+    function renderHero(lang){
+      heroEl.hidden = false;
+      heroMedia.style.backgroundImage = `url('${hero.image}')`;
+      heroTitle.textContent = hero.title[lang] || hero.title.EN;
+      heroExcerpt.textContent = hero.excerpt[lang] || hero.excerpt.EN;
+      const place = (hero.place && (hero.place[lang] || hero.place.EN)) || "";
+      const d = new Date(hero.date).toLocaleDateString(lang === 'MK' ? 'mk-MK' : (lang === 'AL' ? 'sq-AL' : 'en-GB'), {year:'numeric', month:'short', day:'2-digit'});
+      heroMeta.textContent = `${d} • ${place}`;
+      heroBtn.href = hero.url;
+    }
+
+    function makeCard(item, lang){
+      const card = document.createElement('article');
+      card.className = 'news-card';
+      const media = document.createElement('div');
+      media.className = 'news-media';
+      media.style.backgroundImage = `url('${item.image}')`;
+      const body = document.createElement('div');
+      body.className = 'news-body';
+
+      const title = document.createElement('h3');
+      title.className = 'news-title';
+      title.setAttribute('data-title-en', item.title.EN);
+      title.setAttribute('data-title-al', item.title.AL);
+      title.setAttribute('data-title-mk', item.title.MK);
+
+      const excerpt = document.createElement('p');
+      excerpt.className = 'news-excerpt';
+      excerpt.setAttribute('data-excerpt-en', item.excerpt.EN);
+      excerpt.setAttribute('data-excerpt-al', item.excerpt.AL);
+      excerpt.setAttribute('data-excerpt-mk', item.excerpt.MK);
+
+      const meta = document.createElement('div');
+      meta.className = 'news-meta';
+      meta.setAttribute('data-place-en', item.place?.EN || '');
+      meta.setAttribute('data-place-al', item.place?.AL || '');
+      meta.setAttribute('data-place-mk', item.place?.MK || '');
+      meta.setAttribute('data-date', item.date);
+
+      const link = document.createElement('a');
+      link.className = 'link';
+      link.href = item.url;
+      link.setAttribute('data-i18n-news','readMore');
+
+      body.appendChild(title);
+      body.appendChild(excerpt);
+      body.appendChild(meta);
+      body.appendChild(link);
+
+      card.appendChild(media);
+      card.appendChild(body);
+
+      // set initial language content
+      setCardLang(card, lang);
+      return card;
+    }
+
+    function setCardLang(card, lang){
+      const tt = card.querySelector('.news-title');
+      const ex = card.querySelector('.news-excerpt');
+      const mt = card.querySelector('.news-meta');
+
+      const t = tt.getAttribute(lang === 'AL' ? 'data-title-al' : lang === 'MK' ? 'data-title-mk' : 'data-title-en');
+      const e = ex.getAttribute(lang === 'AL' ? 'data-excerpt-al' : lang === 'MK' ? 'data-excerpt-mk' : 'data-excerpt-en');
+
+      const dateISO = mt.getAttribute('data-date');
+      const place = mt.getAttribute(lang === 'AL' ? 'data-place-al' : lang === 'MK' ? 'data-place-mk' : 'data-place-en');
+      const d = new Date(dateISO).toLocaleDateString(lang === 'MK' ? 'mk-MK' : (lang === 'AL' ? 'sq-AL' : 'en-GB'), {year:'numeric', month:'short', day:'2-digit'});
+
+      tt.textContent = t;
+      ex.textContent = e;
+      mt.textContent = place ? `${d} • ${place}` : d;
+    }
+
+    function renderGrid(lang){
+      grid.innerHTML = '';
+      rest.forEach(item => {
+        grid.appendChild(makeCard(item, lang));
+      });
+    }
+
+    function updateRenderedLang(lang){
+      // cards
+      grid.querySelectorAll('.news-card').forEach(card => setCardLang(card, lang));
+      // hero
+      renderHero(lang);
+      // translate generic labels
+      document.querySelectorAll('[data-i18n-news]').forEach(el=>{
+        const k = el.getAttribute('data-i18n-news');
+        const pack = STR[lang] || STR.EN;
+        if (pack[k]) el.textContent = pack[k];
+      });
+    }
+
+    const initialLang = localStorage.getItem('lang') || 'EN';
+    renderHero(initialLang);
+    renderGrid(initialLang);
+    applyNewsLang(initialLang);
+
+    // ===== Language switch hook
+    const langBar = document.getElementById('langBar');
+    if (langBar) {
+      langBar.addEventListener('click', (e)=>{
+        const btn = e.target.closest('button[data-lang]');
+        if(!btn) return;
+        const code = btn.dataset.lang;
+        localStorage.setItem('lang', code);
+        langBar.querySelectorAll('button').forEach(b=>b.classList.toggle('active', b===btn));
+        applyNewsLang(code);
+      });
+      // reflect saved
+      langBar.querySelectorAll('button').forEach(b=>b.classList.toggle('active', b.dataset.lang===initialLang));
+    }
+
+  </script>
+</body>
+</html>

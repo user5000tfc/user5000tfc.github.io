@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="EN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ABDS — Get Involved</title>
+  <meta name="description" content="Volunteer, partner, or donate to support equality and social justice.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --deep-blue:#0b3c88; --warm-gold:#c79a4a;
+      --ink:#0b1424; --muted:#5c6b7e; --panel:#ffffff; --bg:#f6f8fb;
+      --line:rgba(11,20,36,.10); --shadow:0 18px 60px rgba(11,20,36,.15); --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+    img{display:block;max-width:100%} a{text-decoration:none;color:inherit}
+    .container{max-width:1100px;margin-inline:auto;padding:0 20px}
+    .link{color:var(--deep-blue);font-weight:700;border-bottom:2px solid currentColor;padding-bottom:2px}
+
+    /* Header / Nav */
+    .topbar{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.85);backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--line);transition:all .25s ease;display:flex;justify-content:space-between}
+    .topbar.shrink{padding-block:6px}
+    .topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 20px;margin:0}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.01em}
+    .brand .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+    nav{display:flex;align-items:center;gap:14px}
+    .menu{display:flex;gap:10px;list-style:none;padding:0;margin:0}
+    .menu a{padding:8px 12px;border-radius:999px;font-weight:600;font-size:.95rem;transition:transform .15s ease,background .2s ease}
+    .menu a:hover{background:rgba(199,154,74,.12);transform:translateY(-1px)}
+    .cta{padding:10px 14px;border-radius:999px;font-weight:700;background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold));color:#fff;box-shadow:0 10px 24px rgba(11,60,136,.25)}
+    .lang{display:flex;align-items:center;gap:6px;padding-left:6px}
+    .lang button{border:1px solid var(--line);background:#fff;padding:6px 10px;border-radius:999px;font-weight:700;cursor:pointer}
+    .lang button.active{border-color:rgba(11,60,136,.35);color:#fff;background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+    .sep{width:1px;height:22px;background:var(--line)}
+    .nav-toggle{display:none;appearance:none;border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:12px;font-weight:800}
+    .nav-wrap{display:flex;align-items:center;gap:12px}
+    @media (max-width:860px){
+      .nav-toggle{display:inline-flex}
+      nav{position:fixed;inset:auto 0 0 0;top:60px;background:#fff;border-top:1px solid var(--line);display:none;z-index:55}
+      nav.open{display:block}
+      .menu{flex-direction:column;padding:14px 16px;background-color:#fffffff7;text-align:center}
+      .menu a{padding:12px 14px;border-radius:12px}
+      .lang{padding:0 16px 14px;justify-content:center;margin-top:10px}
+      .sep{display:none}
+      .topbar-inner{width:100%}
+    }
+
+    /* Page */
+    .section{padding:72px 0}
+    .wrap{max-width:1100px;margin-inline:auto;padding:0 20px}
+    .title{font-size:clamp(28px,4.5vw,44px);font-weight:800;letter-spacing:-.01em;margin:0}
+    .lead{color:var(--muted);font-size:1.06rem;max-width:860px}
+    .btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;font-weight:700}
+
+    /* Tabs */
+    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+    .tab-btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:10px 14px;border-radius:999px;font-weight:700;cursor:pointer}
+    .tab-btn[aria-selected="true"]{color:#fff;background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold));border-color:rgba(11,60,136,.35)}
+    .grid{display:grid;gap:20px}
+    .grid-2{grid-template-columns:1fr 1fr}
+    @media (max-width:900px){.grid-2{grid-template-columns:1fr}}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:0 14px 30px rgba(11,20,36,.06);padding:20px}
+    .badge{display:inline-block;font-weight:700;font-size:.8rem;padding:6px 10px;border-radius:999px;background:rgba(11,60,136,.08);color:var(--deep-blue);border:1px solid rgba(11,60,136,.18)}
+    .hidden{display:none !important}
+
+    /* Forms */
+    .form-grid{display:grid;gap:14px}
+    @media(min-width:720px){.col-2{grid-template-columns:1fr 1fr}.col-3{grid-template-columns:1fr 1fr 1fr}}
+    label .t{display:block;font-weight:700;margin-bottom:6px}
+    input[type="text"],input[type="email"],input[type="tel"],input[type="url"],input[type="number"],input[type="date"],input[type="file"],select,textarea{
+      width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font:inherit;background:#fff
+    }
+    textarea{resize:vertical}
+    small.help{color:var(--muted)}
+    .cta{cursor:pointer;border:none}
+    .hr{height:1px;background:var(--line);margin:10px 0}
+
+    /* Footer */
+    footer{background:linear-gradient(180deg,rgba(11,20,36,.04),rgba(11,20,36,.10));border-top:1px solid var(--line);padding:30px 0 60px;color:var(--muted);margin-top:64px}
+    .foot-grid{display:grid;gap:16px}
+    @media(min-width:860px){.foot-grid{grid-template-columns:1.2fr .8fr .8fr}}
+    .brand-mark{display:flex;align-items:center;gap:12px;font-weight:800;color:var(--ink)}
+    .brand-mark .chip{width:12px;height:12px;border-radius:999px;background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="topbar" id="topbar">
+    <div class="topbar-inner container">
+      <div class="brand"><span class="dot"></span> ABDS</div>
+      <div class="nav-wrap">
+        <button class="nav-toggle" id="navToggle" aria-controls="siteNav" aria-expanded="false">☰ Menu</button>
+        <div class="sep"></div>
+      </div>
+    </div>
+    <nav id="siteNav" aria-label="Primary">
+      <ul class="menu container">
+        <li><a href="about.html" data-i18n-nav="about">About</a></li>
+        <li><a href="news.html" data-i18n-nav="news">News</a></li>
+        <li><a href="report.html" data-i18n-nav="programs">Programs</a></li>
+        <li><a href="activity.html" data-i18n-nav="involved">Get Involved</a></li>
+        <li><a href="team.html" data-i18n-nav="team">Our Team</a></li>
+        <li><a class="cta" href="index.html#contact" data-i18n-nav="contact">Contact</a></li>
+        <li>
+          <div class="lang" id="langBar" role="group" aria-label="Language selector">
+            <button data-lang="EN" class="active">EN</button>
+            <button data-lang="AL">AL</button>
+            <button data-lang="MK">MK</button>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="wrap">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+          <h1 class="title" data-i18n="title">Get Involved</h1>
+          <a href="index.html" class="btn-ghost" data-i18n="back">← Back to Home</a>
+        </div>
+        <p class="lead" data-i18n="lead">
+          Your time, skills, or donation can transform lives. Choose a path below to support our work.
+        </p>
+
+        <!-- Tabs -->
+        <div class="tabs" role="tablist" aria-label="Involvement paths">
+          <button class="tab-btn" id="tab-volunteer" role="tab" aria-selected="false" data-path="volunteer" data-i18n="volunteer">Volunteer</button>
+          <button class="tab-btn" id="tab-partner" role="tab" aria-selected="false" data-path="partner" data-i18n="partner">Partner</button>
+          <button class="tab-btn" id="tab-donate" role="tab" aria-selected="false" data-path="donate" data-i18n="donate">Donate</button>
+        </div>
+
+        <!-- Intro-only text (shown when no ?tab param) -->
+        <!-- <div class="card" id="introCard">
+          <div class="grid grid-2">
+            <div>
+              <span class="badge" data-i18n="vBadge">Volunteer</span>
+              <p data-i18n="vText">Join community outreach, translation, research, or event coordination teams.</p>
+            </div>
+            <div>
+              <span class="badge" data-i18n="pBadge">Partner</span>
+              <p data-i18n="pText">Collaborate on research, training, or service delivery with your organization or school.</p>
+            </div>
+            <div>
+              <span class="badge" data-i18n="dBadge">Donate</span>
+              <p data-i18n="dText">Help us fund legal aid hours, educational materials, and emergency support.</p>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- Volunteer -->
+        <section class="card hidden" id="panel-volunteer" role="tabpanel" aria-labelledby="tab-volunteer">
+          <h2 style="margin:0 0 8px" data-i18n="vTitle">Volunteer Application</h2>
+          <p class="lead" data-i18n="vLead">Tell us about you and how you’d like to help.</p>
+          <form id="form-volunteer" class="form-grid" novalidate enctype="multipart/form-data">
+            <div class="form-grid col-2">
+              <label><span class="t" data-i18n="fullName">Full Name</span><input type="text" name="fullName" required></label>
+              <label><span class="t" data-i18n="email">Email</span><input type="email" name="email" required placeholder="you@example.org"></label>
+            </div>
+            <div class="form-grid col-2">
+              <label><span class="t" data-i18n="phone">Phone</span><input type="tel" name="phone" placeholder="+389 ..."></label>
+              <label><span class="t" data-i18n="city">City</span><input type="text" name="city"></label>
+            </div>
+            <div>
+              <span class="t" data-i18n="areas">Areas of Interest</span>
+              <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:6px">
+                <label><input type="checkbox" name="areas" value="outreach"> <span data-i18n="aOutreach">Community outreach</span></label>
+                <label><input type="checkbox" name="areas" value="translation"> <span data-i18n="aTranslation">Translation</span></label>
+                <label><input type="checkbox" name="areas" value="research"> <span data-i18n="aResearch">Research</span></label>
+                <label><input type="checkbox" name="areas" value="events"> <span data-i18n="aEvents">Events</span></label>
+                <label><input type="checkbox" name="areas" value="legal"> <span data-i18n="aLegal">Legal support</span></label>
+                <label><input type="checkbox" name="areas" value="it"> <span data-i18n="aIT">IT / Web</span></label>
+              </div>
+            </div>
+            <div class="form-grid col-2">
+              <label>
+                <span class="t" data-i18n="availability">Availability</span>
+                <select name="availability" required>
+                  <option value="" selected disabled data-i18n="optSelect">— Select —</option>
+                  <option value="weekday" data-i18n="avWeekday">Weekdays</option>
+                  <option value="weekend" data-i18n="avWeekend">Weekends</option>
+                  <option value="evening" data-i18n="avEvening">Evenings</option>
+                  <option value="flexible" data-i18n="avFlexible">Flexible</option>
+                </select>
+              </label>
+              <label>
+                <span class="t" data-i18n="cv">Upload CV (PDF)</span>
+                <input type="file" name="cv" accept=".pdf">
+                <small class="help" data-i18n="cvHelp">Optional but helpful.</small>
+              </label>
+            </div>
+            <label><span class="t" data-i18n="linkedin">LinkedIn / Portfolio (URL)</span><input type="url" name="linkedin" placeholder="https://"></label>
+            <label><span class="t" data-i18n="motivation">Motivation</span><textarea name="motivation" rows="6" required></textarea></label>
+            <div class="hr"></div>
+            <label style="display:flex;gap:10px;align-items:flex-start"><input type="checkbox" name="consent" required> <span data-i18n="consent">I consent to the processing of my data for the purpose of volunteering.</span></label>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <button class="cta" type="submit" data-i18n="apply">Apply →</button>
+              <button class="btn-ghost" type="reset" data-i18n="reset">Reset</button>
+              <!-- <a class="btn-ghost" href="get-involved.html" data-i18n="clearTab">Clear Tab</a> -->
+            </div>
+          </form>
+        </section>
+
+        <!-- Partner -->
+        <section class="card hidden" id="panel-partner" role="tabpanel" aria-labelledby="tab-partner">
+          <h2 style="margin:0 0 8px" data-i18n="pTitle">Partnership Proposal</h2>
+          <p class="lead" data-i18n="pLead">Work with us on research, training, or service delivery.</p>
+          <form id="form-partner" class="form-grid" novalidate>
+            <div class="form-grid col-2">
+              <label><span class="t" data-i18n="orgName">Organization Name</span><input type="text" name="orgName" required></label>
+              <label><span class="t" data-i18n="contactPerson">Contact Person</span><input type="text" name="contactPerson" required></label>
+            </div>
+            <div class="form-grid col-2">
+              <label><span class="t" data-i18n="email">Email</span><input type="email" name="email" required placeholder="you@org.org"></label>
+              <label><span class="t" data-i18n="phone">Phone</span><input type="tel" name="phone" placeholder="+389 ..."></label>
+            </div>
+            <div class="form-grid col-2">
+              <label>
+                <span class="t" data-i18n="orgType">Organization Type</span>
+                <select name="orgType" required>
+                  <option value="" selected disabled data-i18n="optSelect">— Select —</option>
+                  <option value="ngo" data-i18n="otNGO">NGO</option>
+                  <option value="school" data-i18n="otSchool">School / University</option>
+                  <option value="gov" data-i18n="otGov">Government</option>
+                  <option value="company" data-i18n="otCompany">Company</option>
+                  <option value="other" data-i18n="otOther">Other</option>
+                </select>
+              </label>
+              <label>
+                <span class="t" data-i18n="collabArea">Collaboration Area</span>
+                <select name="collabArea" required>
+                  <option value="" selected disabled data-i18n="optSelect">— Select —</option>
+                  <option value="research" data-i18n="cResearch">Research / Data</option>
+                  <option value="training" data-i18n="cTraining">Training / Workshops</option>
+                  <option value="delivery" data-i18n="cDelivery">Service Delivery</option>
+                  <option value="advocacy" data-i18n="cAdvocacy">Advocacy / Policy</option>
+                  <option value="other" data-i18n="cOther">Other</option>
+                </select>
+              </label>
+            </div>
+            <label><span class="t" data-i18n="summary">Proposal Summary</span><textarea name="summary" rows="6" required></textarea></label>
+            <div class="form-grid col-2">
+              <label><span class="t" data-i18n="startDate">Preferred Start Date</span><input type="date" name="startDate"></label>
+              <label><span class="t" data-i18n="website">Website</span><input type="url" name="website" placeholder="https://"></label>
+            </div>
+            <label style="display:flex;gap:10px;align-items:flex-start"><input type="checkbox" name="mou"> <span data-i18n="mou">We are open to an MoU / agreement.</span></label>
+            <div class="hr"></div>
+            <label style="display:flex;gap:10px;align-items:flex-start"><input type="checkbox" name="consent" required> <span data-i18n="consentPartner">I consent to the processing of my data for partnership discussions.</span></label>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <button class="cta" type="submit" data-i18n="apply">Apply →</button>
+              <button class="btn-ghost" type="reset" data-i18n="reset">Reset</button>
+              <!-- <a class="btn-ghost" href="get-involved.html" data-i18n="clearTab">Clear Tab</a> -->
+            </div>
+          </form>
+        </section>
+
+        <!-- Donate -->
+        <section class="card hidden" id="panel-donate" role="tabpanel" aria-labelledby="tab-donate">
+          <h2 style="margin:0 0 8px" data-i18n="dTitle">Donate</h2>
+          <p class="lead" data-i18n="dLead">Your contribution funds legal aid, education, and urgent support.</p>
+          <form id="form-donate" class="form-grid" novalidate>
+            <div class="form-grid col-2">
+              <label><span class="t" data-i18n="fullName">Full Name</span><input type="text" name="fullName"></label>
+              <label><span class="t" data-i18n="email">Email</span><input type="email" name="email" placeholder="you@example.org"></label>
+            </div>
+            <div class="form-grid col-3">
+              <label><span class="t" data-i18n="phone">Phone</span><input type="tel" name="phone" placeholder="+389 ..."></label>
+              <label>
+                <span class="t" data-i18n="purpose">Purpose</span>
+                <select name="purpose" required>
+                  <option value="" selected disabled data-i18n="optSelect">— Select —</option>
+                  <option value="legal" data-i18n="dpLegal">Legal Aid</option>
+                  <option value="education" data-i18n="dpEducation">Education</option>
+                  <option value="emergency" data-i18n="dpEmergency">Emergency Support</option>
+                  <option value="general" data-i18n="dpGeneral">General</option>
+                </select>
+              </label>
+              <label>
+                <span class="t" data-i18n="amount">Amount</span>
+                <input type="number" name="amount" min="1" step="0.01" required placeholder="50">
+              </label>
+            </div>
+            <div class="form-grid col-2">
+              <label><span class="t" data-i18n="currency">Currency</span>
+                <select name="currency" required>
+                  <option value="MKD">MKD</option>
+                  <option value="EUR">EUR</option>
+                </select>
+              </label>
+              <label style="display:flex;gap:10px;align-items:flex-end">
+                <input type="checkbox" name="recurring"> <span data-i18n="recurring">Make this a monthly donation</span>
+              </label>
+            </div>
+            <label><span class="t" data-i18n="notes">Notes (optional)</span><textarea name="notes" rows="5"></textarea></label>
+            <div class="hr"></div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <button class="cta" type="submit" data-i18n="donateBtn">Donate →</button>
+              <button class="btn-ghost" type="reset" data-i18n="reset">Reset</button>
+              <!-- <a class="btn-ghost" href="get-involved.html" data-i18n="clearTab">Clear Tab</a> -->
+            </div>
+            <small class="help" data-i18n="donateHelp">On submit you can redirect to your payment page / processor.</small>
+          </form>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container foot-grid">
+      <div>
+        <div class="brand-mark"><span class="chip"></span> Association for Equality & Social Justice</div>
+        <p style="margin:10px 0 0">© <span id="y"></span> All rights reserved.</p>
+      </div>
+      <div>
+        <strong data-i18n-nav="explore">Explore</strong>
+        <ul style="list-style:none;padding:0;margin:10px 0 0;display:grid;gap:8px">
+          <li><a class="link" href="about.html" data-i18n-nav="about">About</a></li>
+          <li><a class="link" href="news.html" data-i18n-nav="news">News</a></li>
+          <li><a class="link" href="report.html" data-i18n-nav="programs">Programs</a></li>
+          <li><a class="link" href="activity.html" data-i18n-nav="involved">Get Involved</a></li>
+          <li><a class="link" href="team.html">Our Team</a></li>
+        </ul>
+      </div>
+      <div>
+        <strong data-i18n-nav="connect">Connect</strong>
+        <ul style="list-style:none;padding:0;margin:10px 0 0;display:grid;gap:8px">
+          <li><a class="link" href="mailto:contact@example.org">Email</a></li>
+          <li><a class="link" href="#">Facebook</a></li>
+          <li><a class="link" href="#">Instagram</a></li>
+          <li><a class="link" href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky + year
+    const tb=document.getElementById('topbar');document.getElementById('y').textContent=new Date().getFullYear();
+    const onScroll=()=>{if(window.scrollY>12)tb.classList.add('shrink');else tb.classList.remove('shrink')};onScroll();window.addEventListener('scroll',onScroll);
+    // Mobile menu
+    const nav=document.getElementById('siteNav');const btn=document.getElementById('navToggle');
+    btn.addEventListener('click',()=>{const isOpen=nav.classList.toggle('open');btn.setAttribute('aria-expanded',isOpen?'true':'false')});
+    nav.addEventListener('click',e=>{if(e.target.tagName==='A'&&nav.classList.contains('open')){nav.classList.remove('open');btn.setAttribute('aria-expanded','false')}});
+
+    // i18n packs
+    const NAV_STR={EN:{about:"About",news:"News",programs:"Programs",involved:"Get Involved",team:"Our Team",contact:"Contact",explore:"Explore",connect:"Connect"},
+                   AL:{about:"Rreth Nesh",news:"Lajme",programs:"Programet",involved:"Përfshihu",team:"Ekipi Ynë",contact:"Kontakt",explore:"Eksploro",connect:"Lidhu"},
+                   MK:{about:"За нас",news:"Вести",programs:"Програми",involved:"Вклучи се",team:"Нашата Екипа",contact:"Контакт",explore:"Истражи",connect:"Поврзи се"}};
+    const STR={
+      EN:{title:"Get Involved",back:"← Back to Home",lead:"Your time, skills, or donation can transform lives. Choose a path below to support our work.",
+          volunteer:"Volunteer",partner:"Partner",donate:"Donate",
+          vBadge:"Volunteer",vText:"Join community outreach, translation, research, or event coordination teams.",
+          pBadge:"Partner",pText:"Collaborate on research, training, or service delivery with your organization or school.",
+          dBadge:"Donate",dText:"Help us fund legal aid hours, educational materials, and emergency support.",
+          vTitle:"Volunteer Application",vLead:"Tell us about you and how you’d like to help.",
+          pTitle:"Partnership Proposal",pLead:"Work with us on research, training, or service delivery.",
+          dTitle:"Donate",dLead:"Your contribution funds legal aid, education, and urgent support.",
+          fullName:"Full Name",email:"Email",phone:"Phone",city:"City",areas:"Areas of Interest",
+          aOutreach:"Community outreach",aTranslation:"Translation",aResearch:"Research",aEvents:"Events",aLegal:"Legal support",aIT:"IT / Web",
+          availability:"Availability",optSelect:"— Select —",avWeekday:"Weekdays",avWeekend:"Weekends",avEvening:"Evenings",avFlexible:"Flexible",
+          cv:"Upload CV (PDF)",cvHelp:"Optional but helpful.",linkedin:"LinkedIn / Portfolio (URL)",motivation:"Motivation",
+          consent:"I consent to the processing of my data for the purpose of volunteering.",
+          orgName:"Organization Name",contactPerson:"Contact Person",orgType:"Organization Type",
+          otNGO:"NGO",otSchool:"School / University",otGov:"Government",otCompany:"Company",otOther:"Other",
+          collabArea:"Collaboration Area",cResearch:"Research / Data",cTraining:"Training / Workshops",cDelivery:"Service Delivery",cAdvocacy:"Advocacy / Policy",cOther:"Other",
+          summary:"Proposal Summary",startDate:"Preferred Start Date",website:"Website",mou:"We are open to an MoU / agreement.",
+          consentPartner:"I consent to the processing of my data for partnership discussions.",
+          purpose:"Purpose",dpLegal:"Legal Aid",dpEducation:"Education",dpEmergency:"Emergency Support",dpGeneral:"General",
+          amount:"Amount",currency:"Currency",recurring:"Make this a monthly donation",notes:"Notes (optional)",donateBtn:"Donate →",donateHelp:"On submit you can redirect to your payment page / processor.",
+          apply:"Apply →",reset:"Reset",clearTab:"Clear Tab"},
+      AL:{title:"Përfshihu",back:"← Kthehu në Faqen Kryesore",lead:"Koha, aftësitë ose donacioni yt mund të ndryshojnë jetë. Zgjidh një rrugë për të mbështetur punën tonë.",
+          volunteer:"Vullnetar",partner:"Partneritet",donate:"Dhurim",
+          vBadge:"Vullnetar",vText:"Bashkohu në terren, përkthim, kërkim ose organizim eventesh.",
+          pBadge:"Partneritet",pText:"Bashkëpuno në kërkim, trajnime ose ofrim shërbimesh me organizatën/shkollën tënde.",
+          dBadge:"Dhurim",dText:"Ndihmo për orë ndihme juridike, materiale edukimi dhe mbështetje emergjente.",
+          vTitle:"Aplikim për Vullnetarë",vLead:"Na trego rreth teje dhe si dëshiron të ndihmosh.",
+          pTitle:"Propozim Partneriteti",pLead:"Puno me ne në kërkim, trajnime ose shërbime.",
+          dTitle:"Dhurim",dLead:"Kontributi yt financon ndihmën juridike, edukimin dhe mbështetjen urgjente.",
+          fullName:"Emri i Plotë",email:"Email",phone:"Telefoni",city:"Qyteti",areas:"Fusha Interesi",
+          aOutreach:"Teren / komunitet",aTranslation:"Përkthim",aResearch:"Kërkim",aEvents:"Evente",aLegal:"Mbështetje ligjore",aIT:"IT / Web",
+          availability:"Disponueshmëria",optSelect:"— Zgjidh —",avWeekday:"Ditë pune",avWeekend:"Fundjava",avEvening:"Mbrëmje",avFlexible:"Fleksibël",
+          cv:"Ngarko CV (PDF)",cvHelp:"Opsionale por e dobishme.",linkedin:"LinkedIn / Portfolio (URL)",motivation:"Motivimi",
+          consent:"Jap pëlqimin për përpunimin e të dhënave për qëllime vullnetarizmi.",
+          orgName:"Emri i Organizates",contactPerson:"Person Kontakti",orgType:"Lloji i Organizates",
+          otNGO:"OJQ",otSchool:"Shkollë / Universitet",otGov:"Qeveri",otCompany:"Kompani",otOther:"Tjetër",
+          collabArea:"Fusha e Bashkëpunimit",cResearch:"Kërkim / Të dhëna",cTraining:"Trajnime / Punëtori",cDelivery:"Ofrim Shërbimesh",cAdvocacy:"Avokim / Politika",cOther:"Tjetër",
+          summary:"Përmbledhje e Propozimit",startDate:"Data e Preferuar e Nisjes",website:"Uebfaqe",mou:"Jemi të hapur për një marrëveshje / MoU.",
+          consentPartner:"Jap pëlqimin për përpunimin e të dhënave për partneritet.",
+          purpose:"Qëllimi",dpLegal:"Ndihmë Juridike",dpEducation:"Edukimi",dpEmergency:"Mbështetje Urgjente",dpGeneral:"I Përgjithshëm",
+          amount:"Shuma",currency:"Monedha",recurring:"Bëje donacion mujor",notes:"Shënime (opsionale)",donateBtn:"Dhuro →",donateHelp:"Pas dërgimit mund të ridrejtohet te faqja e pagesës.",
+          apply:"Apliko →",reset:"Rivendos",clearTab:"Hiq Tab-in"},
+      MK:{title:"Вклучи се",back:"← Назад кон Почетна",lead:"Твоето време, вештини или донација можат да променат животи. Избери пат за поддршка.",
+          volunteer:"Волонтирај",partner:"Партнерство",donate:"Донирај",
+          vBadge:"Волонтирај",vText:"Вклучи се во теренска работа, превод, истражување или организација на настани.",
+          pBadge:"Партнерство",pText:"Соработувај на истражување, обуки или услуги со твојата организација/училиште.",
+          dBadge:"Донирај",dText:"Поддржи правна помош, едукативни материјали и итна помош.",
+          vTitle:"Пријава за Волонтери",vLead:"Кажи ни за тебе и како би помогнал/а.",
+          pTitle:"Предлог за Партнерство",pLead:"Соработувај со нас за истражување, обуки или услуги.",
+          dTitle:"Донација",dLead:"Твојот придонес финансира правна помош, едукација и итна поддршка.",
+          fullName:"Име и презиме",email:"Е-пошта",phone:"Телефон",city:"Град",areas:"Области на интерес",
+          aOutreach:"Терен / заедница",aTranslation:"Превод",aResearch:"Истражување",aEvents:"Настани",aLegal:"Правна поддршка",aIT:"ИТ / Веб",
+          availability:"Достапност",optSelect:"— Избери —",avWeekday:"Работни денови",avWeekend:"Викенди",avEvening:"Навечер",avFlexible:"Флексибилно",
+          cv:"Постави CV (PDF)",cvHelp:"По желба, но корисно.",linkedin:"LinkedIn / Портфолио (URL)",motivation:"Мотивација",
+          consent:"Се согласувам на обработка на моите податоци за цел на волонтирање.",
+          orgName:"Име на организација",contactPerson:"Контакт лице",orgType:"Тип на организација",
+          otNGO:"НВО",otSchool:"Училиште / Универзитет",otGov:"Влада",otCompany:"Компанија",otOther:"Друго",
+          collabArea:"Област на соработка",cResearch:"Истражување / Податоци",cTraining:"Обуки / Работилници",cDelivery:"Испорака на услуги",cAdvocacy:"Застапување / Политики",cOther:"Друго",
+          summary:"Краток опис на предлогот",startDate:"Посакуван почеток",website:"Вебсајт",mou:"Отворени сме за Меморандум за соработка.",
+          consentPartner:"Се согласувам на обработка на моите податоци за партнерство.",
+          purpose:"Намена",dpLegal:"Правна помош",dpEducation:"Едукација",dpEmergency:"Итна помош",dpGeneral:"Општо",
+          amount:"Износ",currency:"Валута",recurring:"Месечна донација",notes:"Белешки (по желба)",donateBtn:"Донирај →",donateHelp:"По испраќање може да се пренасочи на страница за плаќање.",
+          apply:"Аплицирај →",reset:"Ресетирај",clearTab:"Исчисти табот"}
+    };
+
+    function setNavFooterLang(code){
+      const pack=NAV_STR[code]||NAV_STR.EN;
+      document.documentElement.setAttribute('data-lang',code);
+      document.querySelectorAll('[data-i18n-nav]').forEach(el=>{
+        const k=el.getAttribute('data-i18n-nav');if(pack[k])el.textContent=pack[k];
+      });
+      document.querySelectorAll('#langBar button').forEach(b=>b.classList.toggle('active',b.dataset.lang===code));
+    }
+    function setPageLang(code){
+      const pack=STR[code]||STR.EN;
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const k=el.getAttribute('data-i18n'); if(pack[k]) el.textContent=pack[k];
+      });
+    }
+    const saved=localStorage.getItem('lang')||'EN'; setNavFooterLang(saved); setPageLang(saved);
+    document.getElementById('langBar').addEventListener('click',e=>{
+      const btn=e.target.closest('button[data-lang]'); if(!btn) return;
+      localStorage.setItem('lang',btn.dataset.lang); setNavFooterLang(btn.dataset.lang); setPageLang(btn.dataset.lang);
+    });
+
+    // Tabs logic with query param
+    // const intro=document.getElementById('introCard');
+    const panels={
+      volunteer: document.getElementById('panel-volunteer'),
+      partner: document.getElementById('panel-partner'),
+      donate: document.getElementById('panel-donate')
+    };
+    const buttons={
+      volunteer: document.getElementById('tab-volunteer'),
+      partner: document.getElementById('tab-partner'),
+      donate: document.getElementById('tab-donate')
+    };
+    function activateTab(name,{push=true}={}){
+      // reset
+      Object.values(panels).forEach(p=>p.classList.add('hidden'));
+      Object.values(buttons).forEach(b=>b.setAttribute('aria-selected','false'));
+    //   intro.classList.add('hidden');
+      if(!name){ // no tab selected
+        // intro.classList.remove('hidden');
+        if(push) history.replaceState({},'',location.pathname);
+        return;
+      }
+      panels[name]?.classList.remove('hidden');
+      buttons[name]?.setAttribute('aria-selected','true');
+      if(push){
+        const url=new URL(location.href); url.searchParams.set('tab',name); history.pushState({},'',url.toString());
+      }
+      // focus accessibility
+      panels[name]?.setAttribute('tabindex','-1'); panels[name]?.focus?.();
+    }
+    // Button clicks
+    Object.entries(buttons).forEach(([name,btn])=>{
+      btn.addEventListener('click',()=>activateTab(name));
+    });
+    // On load: read param
+    const params=new URLSearchParams(location.search); const initial=params.get('tab');
+    if(initial && panels[initial]) activateTab(initial,{push:false}); else activateTab(null,{push:false});
+    // Back/forward support
+    window.addEventListener('popstate',()=>{
+      const p=new URLSearchParams(location.search).get('tab');
+      if(p && panels[p]) activateTab(p,{push:false}); else activateTab(null,{push:false});
+    });
+
+    // Simple “submit” handlers (demo)
+    function hookForm(id, onOk){
+      const f=document.getElementById(id); if(!f) return;
+      f.addEventListener('submit',e=>{
+        e.preventDefault();
+        // naive required check
+        const missing=[...f.querySelectorAll('[required]')].some(el=>!el.value || (el.type==='checkbox'&&!el.checked));
+        if(missing){ alert('Please complete required fields.'); return; }
+        onOk?.(new FormData(f));
+      });
+    }
+    hookForm('form-volunteer',()=>alert('Application sent. Thank you!'));
+    hookForm('form-partner',()=>alert('Partnership proposal sent. Thank you!'));
+    hookForm('form-donate',fd=>{
+      alert('Thank you for your donation intent! Redirecting to payment…');
+      // Example: location.href = `/pay?amount=${encodeURIComponent(fd.get('amount'))}&currency=${fd.get('currency')}`;
+    });
+  </script>
+</body>
+</html>

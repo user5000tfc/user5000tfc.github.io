@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="EN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ABDS — Request Help / Report</title>
+  <meta name="description" content="Report an issue or request social justice support.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --deep-blue:#0b3c88;  /* primary */
+      --warm-gold:#c79a4a;  /* accent */
+      --ink:#0b1424;        /* text */
+      --muted:#5c6b7e;
+      --panel:#ffffff;
+      --bg:#f6f8fb;
+      --line:rgba(11,20,36,.10);
+      --shadow:0 18px 60px rgba(11,20,36,.15);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+      line-height:1.55;
+    }
+    img{display:block;max-width:100%}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin-inline:auto;padding:0 20px}
+    .link{color:var(--deep-blue); font-weight:700; text-decoration:none; border-bottom:2px solid currentColor; padding-bottom:2px}
+
+    /* ======= Header / Nav ======= */
+    .topbar{
+      position:sticky; top:0; z-index:60;
+      background:rgba(255,255,255,.85);
+      backdrop-filter:saturate(140%) blur(8px);
+      border-bottom:1px solid var(--line);
+      transition:all .25s ease;
+      display:flex; justify-content:space-between;
+    }
+    .topbar.shrink{padding-block:6px;}
+    .topbar-inner{display:flex;align-items:center;justify-content:space-between; gap:16px; padding:12px 20px; margin:0;}
+    .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.01em}
+    .brand .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+    nav{display:flex; align-items:center; gap:14px}
+    .menu{display:flex; gap:10px; list-style:none; padding:0; margin:0}
+    .menu a{
+      padding:8px 12px; border-radius:999px; font-weight:600; font-size:.95rem;
+      transition:transform .15s ease, background .2s ease;
+    }
+    .menu a:hover{background:rgba(199,154,74,.12); transform:translateY(-1px)}
+    .cta{
+      padding:10px 14px; border-radius:999px; font-weight:700;
+      background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold));
+      color:#fff; box-shadow:0 10px 24px rgba(11,60,136,.25);
+    }
+    .lang{display:flex; align-items:center; gap:6px; padding-left:6px}
+    .lang button{
+      border:1px solid var(--line);
+      background:#fff; padding:6px 10px; border-radius:999px; font-weight:700; cursor:pointer;
+    }
+    .lang button.active{border-color:rgba(11,60,136,.35); color:#fff; background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+    .sep{width:1px; height:22px; background:var(--line)}
+    .nav-toggle{
+      display:none; appearance:none; border:1px solid var(--line); background:#fff;
+      padding:8px 10px; border-radius:12px; font-weight:800;
+    }
+    .nav-wrap{display:flex; align-items:center; gap:12px}
+    @media (max-width: 860px){
+      .nav-toggle{display:inline-flex}
+      nav{position:fixed; inset:auto 0 0 0; top:60px; background:#fff; border-top:1px solid var(--line);
+           display:none; z-index:55}
+      nav.open{display:block}
+      .menu{flex-direction:column; padding:14px 16px; background-color:#fffffff7; text-align:center;}
+      .menu a{padding:12px 14px; border-radius:12px}
+      .lang{padding:0 16px 14px; justify-content:center; margin-top:10px;}
+      .sep{display:none}
+      .topbar-inner{width:100%;}
+    }
+
+    /* ======= Page Layout ======= */
+    .wrap{max-width:1100px;margin-inline:auto;padding:0 20px}
+    .section{padding:72px 0}
+    .page-header{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .page-title{
+      font-size:clamp(28px,4.5vw,44px); font-weight:800; letter-spacing:-.01em; margin:0;
+    }
+    .lead{color:var(--muted); font-size:1.06rem; max-width:860px}
+    .btn-ghost{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 14px; border-radius:12px;
+      border:1px solid var(--line); background:#fff; font-weight:700;
+    }
+
+    /* ======= Form & Cards ======= */
+    .grid{display:grid; gap:20px}
+    @media(min-width:900px){ .grid-2{grid-template-columns:1fr 1fr} }
+    .card{
+      background:var(--panel); border:1px solid var(--line); border-radius:16px;
+      box-shadow:0 14px 30px rgba(11,20,36,.06); padding:20px;
+    }
+
+    .form-grid{display:grid; gap:14px}
+    @media(min-width:720px){
+      .col-2{grid-template-columns:1fr 1fr}
+      .col-3{grid-template-columns:1fr 1fr 1fr}
+    }
+
+    label span.title{display:block; font-weight:700; margin-bottom:6px}
+    .req{color:#b32727; font-weight:800; margin-left:4px}
+    input[type="text"], input[type="email"], input[type="tel"], input[type="datetime-local"],
+    input[type="file"], select, textarea {
+      width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:12px; font:inherit; background:#fff;
+    }
+    textarea{resize:vertical}
+    small.help{color:var(--muted)}
+    .inline{display:flex; align-items:center; gap:10px}
+    .hr{height:1px; background:var(--line); margin:8px 0 4px}
+    .badge{
+      display:inline-block; font-weight:700; font-size:.8rem; padding:6px 10px; border-radius:999px;
+      background:rgba(11,60,136,.08); color:var(--deep-blue); border:1px solid rgba(11,60,136,.18);
+    }
+    .cta{cursor:pointer; border:none}
+
+    .counter{font-size:.9rem; color:var(--muted); text-align:right; margin-top:4px}
+    .error{color:#b32727; font-weight:700; margin-top:6px; display:none}
+    .hidden{display:none !important}
+
+    /* ======= Footer ======= */
+    footer{
+      background:linear-gradient(180deg, rgba(11,20,36,.04), rgba(11,20,36,.10));
+      border-top:1px solid var(--line); padding:30px 0 60px; color:var(--muted);
+      margin-top:64px;
+    }
+    .foot-grid{display:grid; gap:16px}
+    @media (min-width:860px){ .foot-grid{ grid-template-columns: 1.2fr .8fr .8fr } }
+    .brand-mark{display:flex; align-items:center; gap:12px; font-weight:800; color:var(--ink)}
+    .brand-mark .chip{width:12px; height:12px; border-radius:999px; background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+
+    /* ======= Toast ======= */
+    .toast{
+      position:fixed; right:16px; bottom:16px; z-index:99; padding:14px 16px; border-radius:12px;
+      background:#0a7a2f; color:#fff; box-shadow:0 14px 34px rgba(0,0,0,.18); display:none
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======= Top Bar / Navbar ======= -->
+  <header class="topbar" id="topbar">
+    <div class="topbar-inner container">
+      <div class="brand"><span class="dot"></span> ABDS</div>
+      <div class="nav-wrap">
+        <button class="nav-toggle" id="navToggle" aria-controls="siteNav" aria-expanded="false">☰ Menu</button>
+        <div class="sep"></div>
+      </div>
+    </div>
+
+    <nav id="siteNav" aria-label="Primary">
+      <ul class="menu container">
+        <li><a href="about.html" data-i18n-nav="about">About</a></li>
+        <li><a href="news.html" data-i18n-nav="news">News</a></li>
+        <li><a href="report.html" data-i18n-nav="programs">Request Help</a></li>
+        <li><a href="activity.html" data-i18n-nav="involved">Get Involved</a></li>
+        <li><a href="team.html" data-i18n-nav="team">Our Team</a></li>
+        <li><a class="cta" href="index.html#contact" data-i18n-nav="contact">Contact</a></li>
+        <li>
+          <div class="lang" id="langBar" role="group" aria-label="Language selector">
+            <button data-lang="EN" class="active">EN</button>
+            <button data-lang="AL">AL</button>
+            <button data-lang="MK">MK</button>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ======= Page ======= -->
+  <main>
+    <section class="section">
+      <div class="wrap">
+        <div class="page-header">
+          <h1 class="page-title" data-i18n-report="pageTitle">Request Help / Report</h1>
+          <a class="btn-ghost" href="index.html" data-i18n-report="backHome">← Back to Home</a>
+        </div>
+        <p class="lead" data-i18n-report="lead">
+          Use this form to request assistance or report concerns related to justice, discrimination, corruption, violence, or other violations. You may submit anonymously. All submissions are handled confidentially.
+        </p>
+
+        <div class="grid grid-2" style="margin-top:16px">
+          <!-- Form -->
+          <form class="card" id="reportForm" novalidate enctype="multipart/form-data">
+            <div class="form-grid">
+              <div class="inline">
+                <input type="checkbox" id="isAnonymous">
+                <label for="isAnonymous" data-i18n-report="anonCheck">Submit anonymously (contact info not required)</label>
+              </div>
+
+              <div class="hr"></div>
+
+              <div class="col-2 form-grid">
+                <label>
+                  <span class="title" data-i18n-report="issueType">Issue Type</span>
+                  <select id="issueType" required>
+                    <option value="" selected disabled data-i18n-report="optSelect">— Select —</option>
+                    <option value="legal" data-i18n-report="optLegal">Legal Aid / Rights Violation</option>
+                    <option value="discrimination" data-i18n-report="optDiscrimination">Discrimination</option>
+                    <option value="violence" data-i18n-report="optViolence">Violence / Abuse</option>
+                    <option value="corruption" data-i18n-report="optCorruption">Corruption / Misconduct</option>
+                    <option value="work" data-i18n-report="optWork">Workplace / Labour Rights</option>
+                    <option value="education" data-i18n-report="optEducation">Education / School</option>
+                    <option value="other" data-i18n-report="optOther">Other</option>
+                  </select>
+                </label>
+
+                <label>
+                  <span class="title" data-i18n-report="urgency">Urgency</span>
+                  <select id="urgency" required>
+                    <option value="" selected disabled data-i18n-report="optSelect">— Select —</option>
+                    <option value="low" data-i18n-report="uLow">Low</option>
+                    <option value="normal" data-i18n-report="uNormal">Normal</option>
+                    <option value="high" data-i18n-report="uHigh">High</option>
+                    <option value="critical" data-i18n-report="uCritical">Critical / Immediate risk</option>
+                  </select>
+                </label>
+              </div>
+
+              <label>
+                <span class="title" data-i18n-report="title">Title (short summary) <span class="req">*</span></span>
+                <input type="text" id="title" maxlength="140" required placeholder="">
+                <div class="counter"><span id="titleCount">0</span>/140</div>
+              </label>
+
+              <label>
+                <span class="title" data-i18n-report="description">Description <span class="req">*</span></span>
+                <textarea id="description" rows="7" maxlength="2000" required placeholder=""></textarea>
+                <div class="counter"><span id="descCount">0</span>/2000</div>
+                <small class="help" data-i18n-report="descHelp">Include what happened, when, where, who was involved, and any evidence you have.</small>
+              </label>
+
+              <div class="col-3 form-grid">
+                <label>
+                  <span class="title" data-i18n-report="location">Location (city/area)</span>
+                  <input type="text" id="location" placeholder="">
+                </label>
+                <label>
+                  <span class="title" data-i18n-report="dateTime">Date & Time</span>
+                  <input type="datetime-local" id="dateTime">
+                </label>
+                <label>
+                  <span class="title" data-i18n-report="langPref">Preferred Language</span>
+                  <select id="langPref">
+                    <option value="EN">EN</option>
+                    <option value="AL">AL</option>
+                    <option value="MK">MK</option>
+                  </select>
+                </label>
+              </div>
+
+              <div>
+                <span class="badge" data-i18n-report="evidence">Evidence (optional)</span>
+                <div class="form-grid col-2" style="margin-top:10px">
+                  <label>
+                    <span class="title" data-i18n-report="attachments">Attachments</span>
+                    <input type="file" id="attachments" multiple accept=".pdf,.jpg,.jpeg,.png,.mp4,.mov,.doc,.docx">
+                    <small class="help" data-i18n-report="attachHelp">You can upload documents, images, or videos. Max 25MB per file (server limits may apply).</small>
+                  </label>
+                  <label>
+                    <span class="title" data-i18n-report="links">Links (optional)</span>
+                    <input type="text" id="links" placeholder="https://">
+                    <small class="help" data-i18n-report="linksHelp">Paste URLs to posts, profiles, or public evidence.</small>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Contact block (hidden when anonymous) -->
+              <div id="contactBlock">
+                <div class="hr"></div>
+                <span class="badge" data-i18n-report="contactHeader">Your Contact (optional if anonymous is checked)</span>
+
+                <div class="form-grid col-2" style="margin-top:10px">
+                  <label>
+                    <span class="title" data-i18n-report="fullName">Full Name</span>
+                    <input type="text" id="fullName" placeholder="">
+                  </label>
+                  <label>
+                    <span class="title" data-i18n-report="email">Email</span>
+                    <input type="email" id="email" placeholder="you@example.org">
+                  </label>
+                </div>
+
+                <div class="form-grid col-2">
+                  <label>
+                    <span class="title" data-i18n-report="phone">Phone</span>
+                    <input type="tel" id="phone" placeholder="+389 ...">
+                  </label>
+                  <label>
+                    <span class="title" data-i18n-report="contactMethod">Preferred Contact Method</span>
+                    <select id="contactMethod">
+                      <option value="email" data-i18n-report="cmEmail">Email</option>
+                      <option value="phone" data-i18n-report="cmPhone">Phone</option>
+                      <option value="none" data-i18n-report="cmNone">No contact needed</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+
+              <div class="hr"></div>
+
+              <!-- Consent -->
+              <div>
+                <div class="inline">
+                  <input type="checkbox" id="consent" required>
+                  <label for="consent" data-i18n-report="consent">I consent to the processing of the information provided for the purpose of assistance and follow-up.</label>
+                </div>
+                <small class="help" data-i18n-report="privacyNote">
+                  Your data is handled confidentially and stored securely. Do not upload illegal content or personal data of third parties without their consent unless it is necessary to report a violation.
+                </small>
+              </div>
+
+              <div class="inline" style="gap:12px; margin-top:6px">
+                <button class="cta" type="submit" data-i18n-report="submit">Submit Report</button>
+                <button class="btn-ghost" type="reset" data-i18n-report="reset">Reset</button>
+              </div>
+
+              <div class="error" id="formError" role="alert">—</div>
+            </div>
+          </form>
+
+          <!-- Side info -->
+          <aside class="card">
+            <h3 style="margin-top:0" data-i18n-report="sideTitle">What happens next?</h3>
+            <p data-i18n-report="sideP1">Our team will review your submission. If you provided contact details and requested follow-up, we will get in touch.</p>
+            <p data-i18n-report="sideP2">If your report indicates immediate risk, please consider contacting emergency services first.</p>
+            <div class="hr"></div>
+            <p><strong data-i18n-report="privacyT">Privacy & Confidentiality</strong></p>
+            <p data-i18n-report="privacyP">We take your confidentiality seriously. Only authorized staff will access your submission.</p>
+            <div class="hr"></div>
+            <p><strong class="section-title" data-i18n-report="programsTitle">Programs</strong></p>
+            <ul>
+                <li><strong data-i18n-report="p1h">Legal Aid & Counseling:</strong> <span data-i18n-report="p1t">Support for vulnerable individuals navigating legal processes.</span></li>
+                <li><strong data-i18n-report="p2h">Civic Education:</strong> <span data-i18n-report="p2t">Workshops on rights, duties, and participation in public life.</span></li>
+                <li><strong data-i18n-report="p3h">Social Inclusion Projects:</strong> <span data-i18n-report="p3t">Youth mentorship, women’s empowerment, and minority advocacy.</span></li>
+                <li><strong data-i18n-report="p4h">Policy & Research:</strong> <span data-i18n-report="p4t">Evidence-based recommendations to improve laws and services.</span></li>
+            </ul>
+            <div class="hr"></div>
+            <!-- <p><a class="link" href="index.html#programs" data-i18n-report="seePrograms">← See Programs</a></p> -->
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer>
+    <div class="container foot-grid">
+      <div>
+        <div class="brand-mark"><span class="chip"></span> Association for Equality & Social Justice</div>
+        <p style="margin:10px 0 0">© <span id="y"></span> All rights reserved.</p>
+      </div>
+      <div>
+        <strong data-i18n-nav="explore">Explore</strong>
+        <ul style="list-style:none; padding:0; margin:10px 0 0; display:grid; gap:8px">
+          <li><a href="about.html" class="link" data-i18n-nav="about">About</a></li>
+          <li><a href="news.html" class="link" data-i18n-nav="news">News</a></li>
+          <li><a href="report.html" class="link" data-i18n-nav="programs">Request Help</a></li>
+          <li><a href="activity.html" class="link" data-i18n-nav="involved">Get Involved</a></li>
+          <li><a class="link" href="team.html">Our Team</a></li>
+        </ul>
+      </div>
+      <div>
+        <strong data-i18n-nav="connect">Connect</strong>
+        <ul style="list-style:none; padding:0; margin:10px 0 0; display:grid; gap:8px">
+          <li><a class="link" href="mailto:contact@example.org">Email</a></li>
+          <li><a class="link" href="#">Facebook</a></li>
+          <li><a class="link" href="#">Instagram</a></li>
+          <li><a class="link" href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">—</div>
+
+  <script>
+    // ===== Sticky header + year
+    const tb = document.getElementById('topbar');
+    document.getElementById('y').textContent = new Date().getFullYear();
+    const onScroll = () => { if (window.scrollY > 12) tb.classList.add('shrink'); else tb.classList.remove('shrink'); };
+    onScroll(); window.addEventListener('scroll', onScroll);
+
+    // ===== Mobile nav toggle
+    const nav = document.getElementById('siteNav');
+    const btn = document.getElementById('navToggle');
+    btn.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    nav.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A' && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // ===== i18n for Navbar/Footer (shared labels)
+    const NAV_STR = {
+      EN:{ about:"About", news:"News", programs:"Programs", involved:"Get Involved", team:"Our Team", contact:"Contact", explore:"Explore", connect:"Connect" },
+      AL:{ about:"Rreth Nesh", news:"Lajme", programs:"Programet", involved:"Përfshihu", team:"Ekipi Ynë", contact:"Kontakt", explore:"Eksploro", connect:"Lidhu" },
+      MK:{ about:"За нас", news:"Вести", programs:"Програми", involved:"Вклучи се", team:"Нашата Екипа", contact:"Контакт", explore:"Истражи", connect:"Поврзи се" }
+    };
+
+    function applyNavFooterLang(code){
+      const pack = NAV_STR[code] || NAV_STR.EN;
+      document.documentElement.setAttribute('data-lang', code);
+      // nav/footer labels
+      document.querySelectorAll('[data-i18n-nav]').forEach(el=>{
+        const k = el.getAttribute('data-i18n-nav');
+        if (pack[k]) el.textContent = pack[k];
+      });
+      // active button
+      document.querySelectorAll('#langBar button').forEach(b => b.classList.toggle('active', b.dataset.lang===code));
+    }
+
+    // ===== Page-specific i18n
+    const STR = {
+      EN:{
+        pageTitle:"Request Help / Report",
+        backHome:"← Back to Home",
+        lead:"Use this form to request assistance or report concerns related to justice, discrimination, corruption, violence, or other violations. You may submit anonymously. All submissions are handled confidentially.",
+
+        anonCheck:"Submit anonymously (contact info not required)",
+        issueType:"Issue Type", optSelect:"— Select —",
+        optLegal:"Legal Aid / Rights Violation", optDiscrimination:"Discrimination",
+        optViolence:"Violence / Abuse", optCorruption:"Corruption / Misconduct",
+        optWork:"Workplace / Labour Rights", optEducation:"Education / School", optOther:"Other",
+        urgency:"Urgency", uLow:"Low", uNormal:"Normal", uHigh:"High", uCritical:"Critical / Immediate risk",
+
+        title:"Title (short summary)", description:"Description",
+        descHelp:"Include what happened, when, where, who was involved, and any evidence you have.",
+        location:"Location (city/area)", dateTime:"Date & Time", langPref:"Preferred Language",
+
+        evidence:"Evidence (optional)", attachments:"Attachments", attachHelp:"You can upload documents, images, or videos. Max 25MB per file (server limits may apply).",
+        links:"Links (optional)", linksHelp:"Paste URLs to posts, profiles, or public evidence.",
+
+        contactHeader:"Your Contact (optional if anonymous is checked)",
+        fullName:"Full Name", email:"Email", phone:"Phone",
+        contactMethod:"Preferred Contact Method", cmEmail:"Email", cmPhone:"Phone", cmNone:"No contact needed",
+
+        consent:"I consent to the processing of the information provided for the purpose of assistance and follow-up.",
+        privacyNote:"Your data is handled confidentially and stored securely. Do not upload illegal content or personal data of third parties without their consent unless it is necessary to report a violation.",
+
+        submit:"Submit Report", reset:"Reset",
+        sideTitle:"What happens next?",
+        sideP1:"Our team will review your submission. If you provided contact details and requested follow-up, we will get in touch.",
+        sideP2:"If your report indicates immediate risk, please consider contacting emergency services first.",
+        privacyT:"Privacy & Confidentiality",
+        privacyP:"We take your confidentiality seriously. Only authorized staff will access your submission.",
+        seePrograms:"← See Programs",
+
+        errRequired:"Please complete all required fields.",
+        okSubmitted:"Thank you. Your report was submitted.",
+
+                programsTitle:"Programs", programsLead:"From legal aid to civic education, our initiatives are designed to remove barriers and empower people.",
+        p1h:"Legal Aid & Counseling:", p1t:"Support for vulnerable individuals navigating legal processes.",
+        p2h:"Civic Education:", p2t:"Workshops on rights, duties, and participation in public life.",
+        p3h:"Social Inclusion Projects:", p3t:"Youth mentorship, women’s empowerment, and minority advocacy.",
+        p4h:"Policy & Research:", p4t:"Evidence-based recommendations to improve laws and services.",
+      },
+      AL:{
+        pageTitle:"Kërko Ndihmë / Raporto",
+        backHome:"← Kthehu në Faqen Kryesore",
+        lead:"Përdorni këtë formular për të kërkuar ndihmë ose për të raportuar çështje që lidhen me drejtësinë, diskriminimin, korrupsionin, dhunën ose shkelje të tjera. Mund të dërgoni në mënyrë anonime. Të gjitha raportimet trajtohen me konfidencialitet.",
+
+        anonCheck:"Dërgo anonimisht (kontaktet nuk kërkohen)",
+        issueType:"Lloji i çështjes", optSelect:"— Zgjidh —",
+        optLegal:"Ndihmë Juridike / Shkelje të të Drejtave", optDiscrimination:"Diskriminim",
+        optViolence:"Dhunë / Abuzim", optCorruption:"Korrupsion / Sjellje e pahijshme",
+        optWork:"Punë / Të Drejtat e Punës", optEducation:"Arsimi / Shkolla", optOther:"Tjetër",
+        urgency:"Urgjenca", uLow:"Ulet", uNormal:"Normale", uHigh:"Lartë", uCritical:"Kritike / Rrezik i menjëhershëm",
+
+        title:"Titulli (përmbledhje e shkurtër)", description:"Përshkrimi",
+        descHelp:"Përfshini çfarë ndodhi, kur, ku, kush ishte i përfshirë dhe çdo provë që keni.",
+        location:"Lokacioni (qyteti/zona)", dateTime:"Data & Ora", langPref:"Gjuha e preferuar",
+
+        evidence:"Prova (opsional)", attachments:"Bashkëngjitje", attachHelp:"Mund të ngarkoni dokumente, imazhe ose video. Maks. 25MB për skedar (mund të aplikohen kufizime të serverit).",
+        links:"Linqe (opsional)", linksHelp:"Ngjit URL të postimeve, profileve ose provave publike.",
+
+        contactHeader:"Kontakti juaj (opsional nëse zgjidhni anonim)",
+        fullName:"Emri i Plotë", email:"Email", phone:"Telefoni",
+        contactMethod:"Mënyra e Preferuar e Kontaktit", cmEmail:"Email", cmPhone:"Telefon", cmNone:"Pa kontakt",
+
+        consent:"Jap pëlqimin për përpunimin e informacionit të dhënë për qëllime të ndihmës dhe ndjekjes.",
+        privacyNote:"Të dhënat tuaja trajtohen konfidencialisht dhe ruhen në mënyrë të sigurt. Mos ngarkoni përmbajtje të paligjshme ose të dhëna personale të palëve të treta pa pëlqimin e tyre, përveç nëse është e nevojshme për raportim shkeljesh.",
+
+        submit:"Dërgo Raportin", reset:"Rivendos",
+        sideTitle:"Çfarë ndodh më pas?",
+        sideP1:"Ekipi ynë do ta shqyrtojë dërgesën tuaj. Nëse dhatë kontakt dhe kërkuat përgjigje, do t’ju kontaktojmë.",
+        sideP2:"Nëse raporti juaj tregon rrezik të menjëhershëm, ju lutemi kontaktoni së pari shërbimet emergjente.",
+        privacyT:"Privatësia & Konfidencialiteti",
+        privacyP:"E marrim konfidencialitetin tuaj seriozisht. Vetëm stafi i autorizuar do të ketë qasje.",
+        seePrograms:"← Shiko Programet",
+
+        errRequired:"Ju lutemi plotësoni fushat e detyrueshme.",
+        okSubmitted:"Faleminderit. Raporti juaj u dërgua.",
+
+               programsTitle:"Programet", programsLead:"Nga ndihma juridike te edukimi qytetar, nismat tona fuqizojnë njerëzit.",
+        p1h:"Ndihmë Juridike:", p1t:"Përkrahje për persona në nevojë gjatë proceseve ligjore.",
+        p2h:"Edukimi Qytetar:", p2t:"Punëtori për të drejtat/detyrimet dhe pjesëmarrjen publike.",
+        p3h:"Përfshirja Sociale:", p3t:"Mentorim të rinjsh, fuqizim i grave dhe avokim për pakicat.",
+        p4h:"Politika & Kërkim:", p4t:"Rekomandime të bazuara në të dhëna për përmirësimin e ligjeve dhe shërbimeve.",
+      },
+      MK:{
+        pageTitle:"Побарај Помош / Пријави",
+        backHome:"← Назад кон Почетна",
+        lead:"Користете ја оваа форма за да побарате помош или да пријавите прашања поврзани со правда, дискриминација, корупција, насилство или други прекршувања. Можете да поднесете анонимно. Сите поднесоци се третираат доверливо.",
+
+        anonCheck:"Поднеси анонимно (контакт не е задолжителен)",
+        issueType:"Тип на случај", optSelect:"— Избери —",
+        optLegal:"Правна помош / Повреда на права", optDiscrimination:"Дискриминација",
+        optViolence:"Насилство / Злоупотреба", optCorruption:"Корупција / Несоодветно однесување",
+        optWork:"Работно место / Работнички права", optEducation:"Образование / Училиште", optOther:"Друго",
+        urgency:"Итност", uLow:"Ниска", uNormal:"Нормална", uHigh:"Висока", uCritical:"Критична / Итна опасност",
+
+        title:"Наслов (краток резиме)", description:"Опис",
+        descHelp:"Вклучете што се случило, кога, каде, кои биле вклучени и какви докази имате.",
+        location:"Локација (град/област)", dateTime:"Датум и време", langPref:"Претпочитан јазик",
+
+        evidence:"Докази (по желба)", attachments:"Прилози", attachHelp:"Може да прикачите документи, слики или видеа. Макс. 25MB по датотека (можни се серверски ограничувања).",
+        links:"Линкови (по желба)", linksHelp:"Залепете URL до објави, профили или јавни докази.",
+
+        contactHeader:"Ваш контакт (по желба ако е означено анонимно)",
+        fullName:"Име и презиме", email:"Е-пошта", phone:"Телефон",
+        contactMethod:"Претпочитан контакт", cmEmail:"Е-пошта", cmPhone:"Телефон", cmNone:"Не е потребен контакт",
+
+        consent:"Се согласувам на обработка на дадените информации за цел на помош и понатамошна комуникација.",
+        privacyNote:"Вашите податоци се третираат доверливо и се чуваат безбедно. Не прикачувајте незаконска содржина или лични податоци на трети лица без нивна согласност, освен ако не е неопходно за пријавување на прекршување.",
+
+        submit:"Испрати Пријава", reset:"Ресетирај",
+        sideTitle:"Што следува понатаму?",
+        sideP1:"Нашиот тим ќе ја прегледа вашата пријава. Ако оставивте контакт и побаравте одговор, ќе ве контактираме.",
+        sideP2:"Доколку пријавата укажува на итна опасност, најпрво обратете се во службите за итни случаи.",
+        privacyT:"Приватност и доверливост",
+        privacyP:"Вашата доверливост е приоритет. Пристап има само овластен персонал.",
+        seePrograms:"← Види Програми",
+
+        errRequired:"Ве молиме пополнете ги задолжителните полиња.",
+        okSubmitted:"Ви благодариме. Вашата пријава е испратена.",
+
+              programsTitle:"Програми", programsLead:"Од правна помош до граѓанско образование – иницијативи што ослободуваат бариери.",
+        p1h:"Правна помош:", p1t:"Поддршка за ранливи лица низ правни постапки.",
+        p2h:"Граѓанско образование:", p2t:"Работилници за права, обврски и учество во јавниот живот.",
+        p3h:"Социјална инклузија:", p3t:"Менторство за млади, оснажување на жени и застапување на малцинства.",
+        p4h:"Политики и истражувања:", p4t:"Препораки базирани на докази за подобри закони и услуги.",
+      }
+    };
+
+    function t(key){
+      const lang = localStorage.getItem('lang') || 'EN';
+      return (STR[lang] && STR[lang][key]) || STR.EN[key] || key;
+    }
+
+    function applyPageLang(code){
+      document.querySelectorAll('[data-i18n-report]').forEach(el=>{
+        const k = el.getAttribute('data-i18n-report');
+        if (STR[code] && STR[code][k]) el.textContent = STR[code][k];
+      });
+      // placeholders refresh
+      document.getElementById('title').placeholder = t('title');
+      document.getElementById('description').placeholder = t('description');
+      document.getElementById('location').placeholder = t('location');
+      document.getElementById('links').placeholder = 'https://';
+    }
+
+    // Lang init + events
+    const savedLang = localStorage.getItem('lang') || 'EN';
+    applyNavFooterLang(savedLang);
+    applyPageLang(savedLang);
+    document.getElementById('langBar').addEventListener('click', (e)=>{
+      const btn = e.target.closest('button[data-lang]');
+      if (!btn) return;
+      const code = btn.dataset.lang;
+      localStorage.setItem('lang', code);
+      applyNavFooterLang(code);
+      applyPageLang(code);
+    });
+
+    // ===== Form UX
+    const f = document.getElementById('reportForm');
+    const isAnonymous = document.getElementById('isAnonymous');
+    const contactBlock = document.getElementById('contactBlock');
+    const titleEl = document.getElementById('title');
+    const descEl = document.getElementById('description');
+    const titleCount = document.getElementById('titleCount');
+    const descCount = document.getElementById('descCount');
+    const formError = document.getElementById('formError');
+    const toast = document.getElementById('toast');
+
+    function updateCount(el, out){ out.textContent = el.value.length; }
+    titleEl.addEventListener('input', ()=>updateCount(titleEl, titleCount));
+    descEl.addEventListener('input', ()=>updateCount(descEl, descCount));
+    updateCount(titleEl, titleCount); updateCount(descEl, descCount);
+
+    isAnonymous.addEventListener('change', ()=>{
+      contactBlock.classList.toggle('hidden', isAnonymous.checked);
+      if (isAnonymous.checked){
+        ['fullName','email','phone'].forEach(id=>{ const e=document.getElementById(id); if(e) e.value=''; });
+        document.getElementById('contactMethod').value = 'none';
+      }
+    });
+
+    function showError(msg){
+      formError.textContent = msg;
+      formError.style.display = 'block';
+      window.scrollTo({top: f.getBoundingClientRect().top + window.scrollY - 80, behavior:'smooth'});
+    }
+    function hideError(){ formError.style.display = 'none'; }
+
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      setTimeout(()=> toast.style.display = 'none', 4000);
+    }
+
+    f.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      hideError();
+
+      if (!document.getElementById('issueType').value ||
+          !document.getElementById('urgency').value ||
+          !titleEl.value.trim() ||
+          !descEl.value.trim() ||
+          !document.getElementById('consent').checked){
+        return showError(t('errRequired'));
+      }
+
+      if (!isAnonymous.checked){
+        const method = document.getElementById('contactMethod').value;
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        if (method === 'email' && !email) return showError(t('errRequired'));
+        if (method === 'phone' && !phone) return showError(t('errRequired'));
+      }
+
+      // Build payload (ready for real backend integration)
+      const data = new FormData(f);
+      data.append('isAnonymous', isAnonymous.checked ? '1' : '0');
+      data.append('submittedAt', new Date().toISOString());
+
+      // Demo success (replace with fetch POST to your API)
+      f.reset();
+      isAnonymous.checked = false;
+      contactBlock.classList.remove('hidden');
+      updateCount(titleEl, titleCount);
+      updateCount(descEl, descCount);
+      hideError();
+      showToast(t('okSubmitted'));
+    });
+  </script>
+</body>
+</html>

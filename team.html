@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="EN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ABDS — Our Team</title>
+  <meta name="description" content="ABDS Team">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --deep-blue:#0b3c88;  /* primary from logo */
+      --warm-gold:#c79a4a;  /* accent from logo */
+      --ink:#0b1424;        /* text */
+      --muted:#5c6b7e;
+      --panel:#ffffff;
+      --bg:#f6f8fb;
+      --line:rgba(11,20,36,.10);
+      --shadow:0 18px 60px rgba(11,20,36,.15);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+      line-height:1.55;
+    }
+    img{display:block;max-width:100%}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin-inline:auto;padding:0 20px}
+
+    /* ======= Header / Nav (same as your pages) ======= */
+    .topbar{
+      position:sticky; top:0; z-index:60;
+      background:rgba(255,255,255,.85);
+      backdrop-filter:saturate(140%) blur(8px);
+      border-bottom:1px solid var(--line);
+      transition:all .25s ease;
+      display:flex; justify-content:space-between;
+    }
+    .topbar.shrink{padding-block:6px;}
+    .topbar-inner{display:flex;align-items:center;justify-content:space-between; gap:16px; padding:12px 20px; margin:0;}
+    .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.01em}
+    .brand .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+    nav{display:flex; align-items:center; gap:14px}
+    .menu{display:flex; gap:10px; list-style:none; padding:0; margin:0;}
+    .menu a{
+      padding:8px 12px; border-radius:999px; font-weight:600; font-size:.95rem;
+      transition:transform .15s ease, background .2s ease;
+    }
+    .menu a:hover{background:rgba(199,154,74,.12); transform:translateY(-1px)}
+    .cta{
+      padding:10px 14px; border-radius:999px; font-weight:700;
+      background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold));
+      color:#fff; box-shadow:0 10px 24px rgba(11,60,136,.25);
+    }
+    .lang{display:flex; align-items:center; gap:6px; padding-left:6px}
+    .lang button{
+      border:1px solid var(--line);
+      background:#fff; padding:6px 10px; border-radius:999px; font-weight:700; cursor:pointer;
+    }
+    .lang button.active{border-color:rgba(11,60,136,.35); color:#fff; background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+    .sep{width:1px; height:22px; background:var(--line)}
+    .nav-toggle{
+      display:none; appearance:none; border:1px solid var(--line); background:#fff;
+      padding:8px 10px; border-radius:12px; font-weight:800;
+    }
+    .nav-wrap{display:flex; align-items:center; gap:12px}
+    @media (max-width: 860px){
+      .nav-toggle{display:inline-flex}
+      nav{position:fixed; inset:auto 0 0 0; top:60px; background:#fff; border-top:1px solid var(--line);
+           display:none; z-index:55}
+      nav.open{display:block}
+      .menu{flex-direction:column; padding:14px 16px; background-color:#fffffff7; text-align:center;}
+      .menu a{padding:12px 14px; border-radius:12px}
+      .lang{padding:0 16px 14px; justify-content:center; margin-top:10px;}
+      .sep{display:none}
+      .topbar-inner{width:100%;}
+    }
+
+    /* ======= Page ======= */
+    .section{padding:72px 0}
+    .page-header{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .page-title{
+      font-size:clamp(28px,4.5vw,44px); font-weight:800; letter-spacing:-.01em; margin:0;
+    }
+    .lead{color:var(--muted); font-size:1.06rem; max-width:860px}
+    .btn-ghost{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 14px; border-radius:12px;
+      border:1px solid var(--line); background:#fff; font-weight:700;
+    }
+
+    /* Filters */
+    .team-filters{
+      display:flex; flex-wrap:wrap; gap:10px; margin: 18px 0 20px;
+    }
+    .chip{
+      border:1px solid var(--line);
+      background:#fff; color:var(--ink);
+      padding:8px 12px; border-radius:999px; font-weight:700; cursor:pointer;
+      transition:transform .15s ease, background .2s ease, border-color .2s ease;
+    }
+    .chip:hover{ transform: translateY(-1px) }
+    .chip.active{
+      color:#fff;
+      background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold));
+      border-color:rgba(11,60,136,.35);
+    }
+
+    /* Grid & Cards */
+    .team-grid{
+      display:grid; gap:20px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 980px){ .team-grid{ grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px){ .team-grid{ grid-template-columns: 1fr; } }
+
+    .member-card{
+      display:flex; flex-direction:column; gap:10px; min-height:100%;
+      background:var(--panel); border:1px solid var(--line); border-radius:16px;
+      box-shadow:0 14px 30px rgba(11,20,36,.06); overflow:hidden;
+    }
+    .member-photo{ aspect-ratio: 4/3; object-fit:cover; width:100% }
+    .member-body{ padding:14px 16px; display:flex; flex-direction:column; gap:8px; flex:1 }
+    .member-name{ margin:0; font-size:1.05rem; font-weight:800 }
+    .member-role{ color:var(--deep-blue); font-weight:700; margin:0 }
+    .member-bio{ color:var(--muted); margin:0 0 6px }
+    .member-links{ margin-top:auto; display:flex; gap:12px; flex-wrap:wrap }
+    .member-links a{
+      color:var(--deep-blue); font-weight:700; text-decoration:none; border-bottom:2px solid currentColor; padding-bottom:2px;
+    }
+
+    footer{
+      background:linear-gradient(180deg, rgba(11,20,36,.04), rgba(11,20,36,.10));
+      border-top:1px solid var(--line); padding:30px 0 60px; color:var(--muted);
+      margin-top:64px;
+    }
+    .foot-grid{display:grid; gap:16px}
+    @media (min-width:860px){ .foot-grid{ grid-template-columns: 1.2fr .8fr .8fr } }
+    .brand-mark{display:flex; align-items:center; gap:12px; font-weight:800; color:var(--ink)}
+    .brand-mark .chip{width:12px; height:12px; border-radius:999px; background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+  </style>
+</head>
+<body>
+
+  <!-- ======= Top Bar ======= -->
+  <header class="topbar" id="topbar">
+    <div class="topbar-inner container">
+      <div class="brand"><span class="dot"></span> ABDS</div>
+      <div class="nav-wrap">
+        <button class="nav-toggle" id="navToggle" aria-controls="siteNav" aria-expanded="false">☰ Menu</button>
+        <div class="sep"></div>
+      </div>
+    </div>
+
+    <!-- Collapsible / Desktop Nav -->
+    <nav id="siteNav" aria-label="Primary">
+      <ul class="menu container">
+        <li><a href="about.html" data-i18n-team="navAbout">About</a></li>
+        <li><a href="news.html" data-i18n-team="navNews">News</a></li>
+        <li><a href="report.html" data-i18n-team="navPrograms">Request Help</a></li>
+        <li><a href="activity.html" data-i18n-team="navInvolved">Get Involved</a></li>
+        <li><a href="team.html" data-i18n-team="navTeam">Our Team</a></li>
+        <li><a class="cta" href="index.html#contact" data-i18n-team="navContact">Contact</a></li>
+        <li>
+          <div class="lang" id="langBar" role="group" aria-label="Language selector">
+            <button data-lang="EN" class="active">EN</button>
+            <button data-lang="AL">AL</button>
+            <button data-lang="MK">MK</button>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ======= Team Page ======= -->
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="page-header">
+          <h1 class="page-title" data-i18n-team="pageTitle">Our Team</h1>
+          <a class="btn-ghost" href="index.html" data-i18n-team="backHome">← Back to Home</a>
+        </div>
+        <p class="lead" data-i18n-team="lead">
+          People behind the mission — lawyers, educators, social workers and organizers dedicated to equality, justice and inclusion.
+        </p>
+
+        <!-- Filters -->
+        <div class="team-filters" id="teamFilters" role="tablist" aria-label="Departments">
+          <button class="chip active" data-filter="all" data-i18n-team="fAll">All</button>
+          <button class="chip" data-filter="leadership" data-i18n-team="fLeadership">Leadership</button>
+          <button class="chip" data-filter="legal" data-i18n-team="fLegal">Legal</button>
+          <button class="chip" data-filter="education" data-i18n-team="fEducation">Education</button>
+          <button class="chip" data-filter="operations" data-i18n-team="fOperations">Operations</button>
+          <button class="chip" data-filter="comms" data-i18n-team="fComms">Communications</button>
+        </div>
+
+        <!-- Grid -->
+        <div class="team-grid" id="teamGrid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer>
+    <div class="container foot-grid">
+      <div>
+        <div class="brand-mark"><span class="chip"></span> Association for Equality & Social Justice</div>
+        <p style="margin:10px 0 0">© <span id="y"></span> All rights reserved.</p>
+      </div>
+      <div>
+        <strong data-i18n-team="footExplore">Explore</strong>
+        <ul style="list-style:none; padding:0; margin:10px 0 0; display:grid; gap:8px">
+          <li><a href="about.html" class="link" data-i18n-team="navAbout">About</a></li>
+          <li><a href="news.html" class="link" data-i18n-team="navNews">News</a></li>
+          <li><a href="report.html" class="link" data-i18n-team="navPrograms">Request Help</a></li>
+          <li><a href="activity.html" class="link" data-i18n-team="navInvolved">Get Involved</a></li>
+          <li><a class="link" href="team.html">Our Team</a></li>
+        </ul>
+      </div>
+      <div>
+        <strong data-i18n-team="footConnect">Connect</strong>
+        <ul style="list-style:none; padding:0; margin:10px 0 0; display:grid; gap:8px">
+          <li><a class="link" href="mailto:contact@example.org">Email</a></li>
+          <li><a class="link" href="#">Facebook</a></li>
+          <li><a class="link" href="#">Instagram</a></li>
+          <li><a class="link" href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======= Team Data (edit/add here) ======= -->
+  <script id="team-data" type="application/json">
+  [
+    {
+      "name":"Elena Petrova",
+      "photo":"https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=1200&auto=format&fit=crop",
+      "dept":"leadership",
+      "role":{"EN":"Executive Director","AL":"Drejtoreshë Ekzekutive","MK":"Извршна директорка"},
+      "bio":{
+        "EN":"Oversees strategy, partnerships and impact across programs.",
+        "AL":"Drejtim i strategjisë, partneriteteve dhe ndikimit në të gjitha programet.",
+        "MK":"Го води стратешкиот развој, партнерствата и влијанието низ програмите."
+      },
+      "email":"elena@example.org"
+    },
+    {
+      "name":"Arben Ismaili",
+      "photo":"https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=1200&auto=format&fit=crop",
+      "dept":"legal",
+      "role":{"EN":"Senior Legal Advisor","AL":"Këshilltar i Lartë Ligjor","MK":"Старши правен советник"},
+      "bio":{
+        "EN":"Legal counselling and representation for vulnerable individuals.",
+        "AL":"Këshillim dhe përfaqësim ligjor për persona në nevojë.",
+        "MK":"Правно советување и застапување за ранливи лица."
+      },
+      "email":"arben@example.org"
+    },
+    {
+      "name":"Mira Jovanovska",
+      "photo":"https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1200&auto=format&fit=crop",
+      "dept":"education",
+      "role":{"EN":"Civic Education Lead","AL":"Drejtues i Edukimit Qytetar","MK":"Раководител за граѓанско образование"},
+      "bio":{
+        "EN":"Designs workshops on rights, duties and participation.",
+        "AL":"Dizajnon punëtori për të drejta, detyrime dhe pjesëmarrje.",
+        "MK":"Креира работилници за права, обврски и учество."
+      },
+      "email":"mira@example.org"
+    },
+    {
+      "name":"Nikola Trajkov",
+      "photo":"https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=1200&auto=format&fit=crop",
+      "dept":"operations",
+      "role":{"EN":"Operations Manager","AL":"Menaxher i Operacioneve","MK":"Менаџер за операции"},
+      "bio":{
+        "EN":"Coordinates logistics, volunteers and events.",
+        "AL":"Koordinon logjistikën, vullnetarët dhe ngjarjet.",
+        "MK":"Координира логистика, волонтери и настани."
+      },
+      "email":"nikola@example.org"
+    },
+    {
+      "name":"Teuta Haziri",
+      "photo":"https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=1200&auto=format&fit=crop",
+      "dept":"legal",
+      "role":{"EN":"Legal Officer","AL":"Zyrtare Ligjore","MK":"Правна службеничка"},
+      "bio":{
+        "EN":"Focus on anti-discrimination and labour rights.",
+        "AL":"Fokus në mosdiskriminim dhe të drejtat në punë.",
+        "MK":"Фокус на недискриминација и работнички права."
+      },
+      "email":"teuta@example.org"
+    },
+    {
+      "name":"Dragan Iliev",
+      "photo":"https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=1200&auto=format&fit=crop",
+      "dept":"education",
+      "role":{"EN":"Training Coordinator","AL":"Koordinator Trajnimesh","MK":"Координатор за обуки"},
+      "bio":{
+        "EN":"Leads teacher trainings and youth mentorship.",
+        "AL":"Udhëheq trajnime për mësues dhe mentorim të rinjsh.",
+        "MK":"Води обуки за наставници и менторство на млади."
+      },
+      "email":"dragan@example.org"
+    },
+    {
+      "name":"Anita Kelmendi",
+      "photo":"https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=1200&auto=format&fit=crop",
+      "dept":"comms",
+      "role":{"EN":"Communications Lead","AL":"Drejtues i Komunikimit","MK":"Раководител за комуникации"},
+      "bio":{
+        "EN":"Press, campaigns and social media strategy.",
+        "AL":"Shtypi, fushatat dhe strategjia e rrjeteve sociale.",
+        "MK":"ПР, кампањи и стратегија за социјални мрежи."
+      },
+      "email":"anita@example.org"
+    },
+    {
+      "name":"Blerim Dauti",
+      "photo":"https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=1200&auto=format&fit=crop",
+      "dept":"operations",
+      "role":{"EN":"Field Coordinator","AL":"Koordinator në Terren","MK":"Теренски координатор"},
+      "bio":{
+        "EN":"Manages field teams and outreach scheduling.",
+        "AL":"Menaxhon ekipet në terren dhe planifikimin e terrenit.",
+        "MK":"Управува со теренски тимови и распоред."
+      },
+      "email":"blerim@example.org"
+    },
+    {
+      "name":"Sara Dimitrova",
+      "photo":"https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop",
+      "dept":"leadership",
+      "role":{"EN":"Programs Director","AL":"Drejtore e Programeve","MK":"Директорка на програми"},
+      "bio":{
+        "EN":"Oversees program design, M&E and grants.",
+        "AL":"Mbikëqyr dizajnin e programeve, M&E dhe grantet.",
+        "MK":"Надгледува дизајн на програми, М&Е и грантови."
+      },
+      "email":"sara@example.org"
+    }
+  ]
+  </script>
+
+  <script>
+    // ===== Footer year + sticky shrink
+    const tb = document.getElementById('topbar');
+    document.getElementById('y').textContent = new Date().getFullYear();
+    const onScroll = () => { if (window.scrollY > 12) tb.classList.add('shrink'); else tb.classList.remove('shrink'); };
+    onScroll(); window.addEventListener('scroll', onScroll);
+
+    // ===== Mobile nav toggle
+    const nav = document.getElementById('siteNav');
+    const btn = document.getElementById('navToggle');
+    btn.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    nav.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A' && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // ===== i18n strings (Team page)
+    const I18N = {
+      EN:{
+        pageTitle:"Our Team",
+        backHome:"← Back to Home",
+        lead:"People behind the mission — lawyers, educators, social workers and organizers dedicated to equality, justice and inclusion.",
+        fAll:"All", fLeadership:"Leadership", fLegal:"Legal", fEducation:"Education", fOperations:"Operations", fComms:"Communications",
+        navAbout:"About", navNews:"News", navPrograms:"Request Help", navInvolved:"Get Involved", navTeam:"Our Team", navContact:"Contact",
+        footExplore:"Explore", footConnect:"Connect",
+        emailLabel:"Email"
+      },
+      AL:{
+        pageTitle:"Ekipi Ynë",
+        backHome:"← Kthehu në Faqen Kryesore",
+        lead:"Njerëzit pas misionit — juristë, edukatorë, punonjës socialë dhe organizatorë të përkushtuar për barazi, drejtësi dhe përfshirje.",
+        fAll:"Të gjitha", fLeadership:"Udhëheqje", fLegal:"Juridike", fEducation:"Edukimi", fOperations:"Operacione", fComms:"Komunikime",
+        navAbout:"Rreth Nesh", navNews:"Lajme", navPrograms:"Kërko Ndihmë", navInvolved:"Përfshihu", navTeam:"Ekipi Ynë", navContact:"Kontakt",
+        footExplore:"Eksploro", footConnect:"Lidhu",
+        emailLabel:"Email"
+      },
+      MK:{
+        pageTitle:"Нашата Екипа",
+        backHome:"← Назад кон Почетна",
+        lead:"Луѓето зад мисијата — правници, едукатори, социјални работници и организатори посветени на еднаквост, правда и инклузија.",
+        fAll:"Сите", fLeadership:"Раководство", fLegal:"Правна", fEducation:"Едукација", fOperations:"Операции", fComms:"Комуникации",
+        navAbout:"За нас", navNews:"Вести", navPrograms:"Побарај Помош", navInvolved:"Вклучи се", navTeam:"Нашата Екипа", navContact:"Контакт",
+        footExplore:"Истражи", footConnect:"Поврзи се",
+        emailLabel:"Е-пошта"
+      }
+    };
+
+    function applyTeamLang(code){
+      const pack = I18N[code] || I18N.EN;
+      document.documentElement.setAttribute('data-lang', code);
+      document.querySelectorAll('[data-i18n-team]').forEach(el=>{
+        const k = el.getAttribute('data-i18n-team');
+        if (pack[k]) el.textContent = pack[k];
+      });
+      // update cards/bios/roles already rendered
+      refreshRenderedCardsLang(code);
+      // reflect active button
+      const langBar = document.getElementById('langBar');
+      if (langBar) langBar.querySelectorAll('button').forEach(b=>b.classList.toggle('active', b.dataset.lang===code));
+    }
+
+    // ===== Team rendering
+    const raw = document.getElementById('team-data').textContent.trim();
+    const TEAM = JSON.parse(raw);
+
+    const grid = document.getElementById('teamGrid');
+
+    function makeCard(member, lang){
+      const card = document.createElement('article');
+      card.className = 'member-card';
+      card.setAttribute('data-dept', member.dept);
+
+      const img = document.createElement('img');
+      img.className = 'member-photo';
+      img.src = member.photo;
+      img.alt = member.name;
+
+      const body = document.createElement('div');
+      body.className = 'member-body';
+
+      const name = document.createElement('h3');
+      name.className = 'member-name';
+      name.textContent = member.name;
+
+      const role = document.createElement('p');
+      role.className = 'member-role';
+      role.setAttribute('data-role-en', member.role.EN);
+      role.setAttribute('data-role-al', member.role.AL);
+      role.setAttribute('data-role-mk', member.role.MK);
+      role.textContent = member.role[lang] || member.role.EN;
+
+      const bio = document.createElement('p');
+      bio.className = 'member-bio';
+      bio.setAttribute('data-bio-en', member.bio.EN);
+      bio.setAttribute('data-bio-al', member.bio.AL);
+      bio.setAttribute('data-bio-mk', member.bio.MK);
+      bio.textContent = member.bio[lang] || member.bio.EN;
+
+      const links = document.createElement('div');
+      links.className = 'member-links';
+      if (member.email){
+        const a = document.createElement('a');
+        a.href = `mailto:${member.email}`;
+        a.setAttribute('data-i18n-team','emailLabel');
+        a.textContent = (I18N[lang]||I18N.EN).emailLabel;
+        links.appendChild(a);
+      }
+
+      body.appendChild(name);
+      body.appendChild(role);
+      body.appendChild(bio);
+      body.appendChild(links);
+
+      card.appendChild(img);
+      card.appendChild(body);
+      return card;
+    }
+
+    function renderTeam(lang){
+      grid.innerHTML='';
+      TEAM.forEach(m => grid.appendChild(makeCard(m, lang)));
+    }
+
+    function refreshRenderedCardsLang(lang){
+      grid.querySelectorAll('.member-card').forEach(card=>{
+        const role = card.querySelector('.member-role');
+        const bio  = card.querySelector('.member-bio');
+        const linksLabel = card.querySelector('[data-i18n-team="emailLabel"]');
+        if (role){
+          role.textContent =
+            role.getAttribute(lang==='AL' ? 'data-role-al' : lang==='MK' ? 'data-role-mk' : 'data-role-en');
+        }
+        if (bio){
+          bio.textContent =
+            bio.getAttribute(lang==='AL' ? 'data-bio-al' : lang==='MK' ? 'data-bio-mk' : 'data-bio-en');
+        }
+        if (linksLabel){
+          linksLabel.textContent = (I18N[lang]||I18N.EN).emailLabel;
+        }
+      });
+    }
+
+    // ===== Filters
+    const filters = document.getElementById('teamFilters');
+    filters.addEventListener('click', (e)=>{
+      const btn = e.target.closest('[data-filter]');
+      if (!btn) return;
+      filters.querySelectorAll('.chip').forEach(b=>b.classList.toggle('active', b===btn));
+      const dept = btn.dataset.filter;
+      grid.querySelectorAll('.member-card').forEach(card=>{
+        const match = dept==='all' || card.dataset.dept===dept;
+        card.style.display = match ? '' : 'none';
+      });
+    });
+
+    // ===== Init language & render
+    const initialLang = localStorage.getItem('lang') || 'EN';
+    renderTeam(initialLang);
+    applyTeamLang(initialLang);
+
+    // ===== Hook language bar
+    const langBar = document.getElementById('langBar');
+    if (langBar) {
+      langBar.addEventListener('click', (e)=>{
+        const btn = e.target.closest('button[data-lang]');
+        if (!btn) return;
+        const code = btn.dataset.lang;
+        localStorage.setItem('lang', code);
+        applyTeamLang(code);
+      });
+      // reflect saved
+      langBar.querySelectorAll('button').forEach(b=>b.classList.toggle('active', b.dataset.lang===initialLang));
+    }
+  </script>
+</body>
+</html>
