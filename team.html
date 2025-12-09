@@ -135,7 +135,7 @@
     .member-name{ margin:0; font-size:1.05rem; font-weight:800 }
     .member-role{ color:var(--deep-blue); font-weight:700; margin:0 }
     .member-bio{ color:var(--muted); margin:0 0 6px }
-    .member-links{ margin-top:auto; display:flex; gap:12px; flex-wrap:wrap }
+    .member-links{ margin-top:auto; display:flex; gap:12px; flex-wrap:wrap; justify-content: space-between; }
     .member-links a{
       color:var(--deep-blue); font-weight:700; text-decoration:none; border-bottom:2px solid currentColor; padding-bottom:2px;
     }
@@ -149,6 +149,7 @@
     @media (min-width:860px){ .foot-grid{ grid-template-columns: 1.2fr .8fr .8fr } }
     .brand-mark{display:flex; align-items:center; gap:12px; font-weight:800; color:var(--ink)}
     .brand-mark .chip{width:12px; height:12px; border-radius:999px; background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+    .read-more{display:inline-block;font-weight:700;text-decoration:none;border-bottom:2px solid currentColor;padding-bottom:2px;color:#0b3c88;          /* logo blue */}
   </style>
 </head>
 <body>
@@ -198,11 +199,11 @@
         <!-- Filters -->
         <div class="team-filters" id="teamFilters" role="tablist" aria-label="Departments">
           <button class="chip active" data-filter="all" data-i18n-team="fAll">All</button>
-          <button class="chip" data-filter="leadership" data-i18n-team="fLeadership">Leadership</button>
+          <!-- <button class="chip" data-filter="leadership" data-i18n-team="fLeadership">Leadership</button>
           <button class="chip" data-filter="legal" data-i18n-team="fLegal">Legal</button>
           <button class="chip" data-filter="education" data-i18n-team="fEducation">Education</button>
           <button class="chip" data-filter="operations" data-i18n-team="fOperations">Operations</button>
-          <button class="chip" data-filter="comms" data-i18n-team="fComms">Communications</button>
+          <button class="chip" data-filter="comms" data-i18n-team="fComms">Communications</button> -->
         </div>
 
         <!-- Grid -->
@@ -244,112 +245,40 @@
   <script id="team-data" type="application/json">
   [
     {
-      "name":"Elena Petrova",
-      "photo":"https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=1200&auto=format&fit=crop",
+      "name":"Agim Nuhiu",
+      "photo":"img/team/agimnuhiu.jpg",
       "dept":"leadership",
-      "role":{"EN":"Executive Director","AL":"Drejtoreshë Ekzekutive","MK":"Извршна директорка"},
+      "role":{"EN":"Executive Director","AL":"Drejtor Ekzekutiv","MK":"Извршен директор"},
       "bio":{
-        "EN":"Oversees strategy, partnerships and impact across programs.",
-        "AL":"Drejtim i strategjisë, partneriteteve dhe ndikimit në të gjitha programet.",
-        "MK":"Го води стратешкиот развој, партнерствата и влијанието низ програмите."
+        "EN":"Professor of Law; Former Minister of Interior.",
+        "AL":"Profesor i së Drejtës; ish-Ministër i Punëve të Brendshme.",
+        "MK":"Професор по право; поранешен министер за внатрешни работи."
       },
-      "email":"elena@example.org"
+      "email":"agim.nuhiu@unite.edu.mk"
     },
     {
-      "name":"Arben Ismaili",
-      "photo":"https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=1200&auto=format&fit=crop",
+      "name":"Ferat Polisi",
+      "photo":"img/team/feratpolisi.jpg",
       "dept":"legal",
-      "role":{"EN":"Senior Legal Advisor","AL":"Këshilltar i Lartë Ligjor","MK":"Старши правен советник"},
+      "role":{"EN":"Vice Director","AL":"Zëvendës Drejtor","MK":"Заменик Директор"},
       "bio":{
-        "EN":"Legal counselling and representation for vulnerable individuals.",
-        "AL":"Këshillim dhe përfaqësim ligjor për persona në nevojë.",
-        "MK":"Правно советување и застапување за ранливи лица."
+        "EN":"Professor of Philosophy and Sociology; Former Mufti of Struga.",
+        "AL":"Profesor i Filozofisë dhe Sociologjisë; ish-Myfti i Strugës.",
+        "MK":"Професор по филозофија и социологија; поранешен муфтија на Струга."
       },
-      "email":"arben@example.org"
+      "email":"ferat.polisi@unite.edu.mk"
     },
     {
-      "name":"Mira Jovanovska",
-      "photo":"https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1200&auto=format&fit=crop",
+      "name":"Muhamed Toci",
+      "photo":"img/team/muhamedtoci.jpg",
       "dept":"education",
-      "role":{"EN":"Civic Education Lead","AL":"Drejtues i Edukimit Qytetar","MK":"Раководител за граѓанско образование"},
+      "role":{"EN":"General Secretary","AL":"Sekretar Gjeneral","MK":"Генерален Секретар"},
       "bio":{
-        "EN":"Designs workshops on rights, duties and participation.",
-        "AL":"Dizajnon punëtori për të drejta, detyrime dhe pjesëmarrje.",
-        "MK":"Креира работилници за права, обврски и учество."
+        "EN":"State Secretary at the Ministry of Justice; Human Rights Expert.",
+        "AL":"Sekretar Shtetëror në Ministrinë e Drejtësisë; ekspert i të drejtave të njeriut.",
+        "MK":"Државен секретар во Министерството за правда; експерт за човекови права."
       },
-      "email":"mira@example.org"
-    },
-    {
-      "name":"Nikola Trajkov",
-      "photo":"https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=1200&auto=format&fit=crop",
-      "dept":"operations",
-      "role":{"EN":"Operations Manager","AL":"Menaxher i Operacioneve","MK":"Менаџер за операции"},
-      "bio":{
-        "EN":"Coordinates logistics, volunteers and events.",
-        "AL":"Koordinon logjistikën, vullnetarët dhe ngjarjet.",
-        "MK":"Координира логистика, волонтери и настани."
-      },
-      "email":"nikola@example.org"
-    },
-    {
-      "name":"Teuta Haziri",
-      "photo":"https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=1200&auto=format&fit=crop",
-      "dept":"legal",
-      "role":{"EN":"Legal Officer","AL":"Zyrtare Ligjore","MK":"Правна службеничка"},
-      "bio":{
-        "EN":"Focus on anti-discrimination and labour rights.",
-        "AL":"Fokus në mosdiskriminim dhe të drejtat në punë.",
-        "MK":"Фокус на недискриминација и работнички права."
-      },
-      "email":"teuta@example.org"
-    },
-    {
-      "name":"Dragan Iliev",
-      "photo":"https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=1200&auto=format&fit=crop",
-      "dept":"education",
-      "role":{"EN":"Training Coordinator","AL":"Koordinator Trajnimesh","MK":"Координатор за обуки"},
-      "bio":{
-        "EN":"Leads teacher trainings and youth mentorship.",
-        "AL":"Udhëheq trajnime për mësues dhe mentorim të rinjsh.",
-        "MK":"Води обуки за наставници и менторство на млади."
-      },
-      "email":"dragan@example.org"
-    },
-    {
-      "name":"Anita Kelmendi",
-      "photo":"https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=1200&auto=format&fit=crop",
-      "dept":"comms",
-      "role":{"EN":"Communications Lead","AL":"Drejtues i Komunikimit","MK":"Раководител за комуникации"},
-      "bio":{
-        "EN":"Press, campaigns and social media strategy.",
-        "AL":"Shtypi, fushatat dhe strategjia e rrjeteve sociale.",
-        "MK":"ПР, кампањи и стратегија за социјални мрежи."
-      },
-      "email":"anita@example.org"
-    },
-    {
-      "name":"Blerim Dauti",
-      "photo":"https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=1200&auto=format&fit=crop",
-      "dept":"operations",
-      "role":{"EN":"Field Coordinator","AL":"Koordinator në Terren","MK":"Теренски координатор"},
-      "bio":{
-        "EN":"Manages field teams and outreach scheduling.",
-        "AL":"Menaxhon ekipet në terren dhe planifikimin e terrenit.",
-        "MK":"Управува со теренски тимови и распоред."
-      },
-      "email":"blerim@example.org"
-    },
-    {
-      "name":"Sara Dimitrova",
-      "photo":"https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop",
-      "dept":"leadership",
-      "role":{"EN":"Programs Director","AL":"Drejtore e Programeve","MK":"Директорка на програми"},
-      "bio":{
-        "EN":"Oversees program design, M&E and grants.",
-        "AL":"Mbikëqyr dizajnin e programeve, M&E dhe grantet.",
-        "MK":"Надгледува дизајн на програми, М&Е и грантови."
-      },
-      "email":"sara@example.org"
+      "email":"tocimuhamed@mt.net.mk"
     }
   ]
   </script>
@@ -402,7 +331,7 @@
         fAll:"Сите", fLeadership:"Раководство", fLegal:"Правна", fEducation:"Едукација", fOperations:"Операции", fComms:"Комуникации",
         navAbout:"За нас", navNews:"Вести", navPrograms:"Побарај Помош", navInvolved:"Вклучи се", navTeam:"Нашата Екипа", navContact:"Контакт",
         footExplore:"Истражи", footConnect:"Поврзи се",
-        emailLabel:"Е-пошта"
+        emailLabel:"Email"
       }
     };
 
@@ -465,6 +394,12 @@
         a.setAttribute('data-i18n-team','emailLabel');
         a.textContent = (I18N[lang]||I18N.EN).emailLabel;
         links.appendChild(a);
+
+        const b = document.createElement('a');
+        b.href = `/${member.role.EN}.html`;
+        b.setAttribute('class', 'read-more');
+        b.textContent = "CV →";
+        links.appendChild(b);
       }
 
       body.appendChild(name);

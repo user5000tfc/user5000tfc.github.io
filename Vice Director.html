@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en" data-lang="EN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ferat Polisi — CV</title>
+  <link rel="icon" href="favicon.ico">
+  <style>
+    :root{--deep-blue:#0b3c88;--warm-gold:#c79a4a;--ink:#0b1424;--muted:#5c6b7e;--panel:#fff;--bg:#f6f8fb;--line:rgba(11,20,36,.10);--radius:14px}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+    .container{max-width:1000px;margin:28px auto;padding:20px}
+    header{display:flex;justify-content:space-between;align-items:center;padding:18px;border-radius:12px;background:linear-gradient(180deg,#ffffff,#fbfdff);border:1px solid var(--line)}
+    .brand{font-weight:800;display:flex;gap:10px;align-items:center}
+    .brand .dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+    nav{display:flex;gap:10px;align-items:center}
+    .lang button{border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:999px;font-weight:700;cursor:pointer}
+    .lang button.active{background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold));color:#fff}
+    main{margin-top:18px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:0 10px 30px rgba(11,20,36,.06)}
+    .row{display:grid;grid-template-columns:260px 1fr;gap:20px;align-items:start}
+    .photo{width:100%;height:260px;background:#eef6f0;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+    h1{margin:0;font-size:22px}
+    .role{color:var(--deep-blue);font-weight:700;margin-top:6px}
+    .photo{background-image: url('img/team/feratpolisi.jpg');background-repeat: no-repeat;background-size: cover;}
+    .section{margin-top:14px}
+    .muted{color:var(--muted)}
+    a.cta{display:inline-block;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold));color:#fff;font-weight:700;text-decoration:none}
+    footer{margin-top:26px;padding:18px;border-radius:12px;background:linear-gradient(180deg,rgba(11,20,36,.03),rgba(11,20,36,.06));border:1px solid var(--line);color:var(--muted)}
+    @media(max-width:760px){.row{grid-template-columns:1fr} .photo{height:200px}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand"><span class="dot"></span> ABDS</div>
+      <nav>
+        <a class="cta" href="index.html">←</a>
+        <div class="lang" id="langBar2">
+          <button data-lang="EN" class="active">EN</button>
+          <button data-lang="AL">AL</button>
+          <button data-lang="MK">MK</button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <article class="card">
+        <div class="row">
+          <div>
+            <div class="photo"></div>
+            <div class="section muted" id="contact2">
+              <p><strong data-i18n-cv="emailLabel">Email</strong>: <a href="mailto:ferat.polisi@unite.edu.mk">ferat.polisi@unite.edu.mk</a></p>
+            </div>
+          </div>
+          <div>
+            <h1 id="name2">Ferat Polisi</h1>
+            <div class="role" id="title2">Vice Director</div>
+
+            <div class="section" id="summary2">
+              <p id="short2">Professor of Philosophy and Sociology; Former Mufti of Struga.</p>
+            </div>
+
+            <div class="section" id="long2">
+              <h3 data-i18n-cv="sectionProfile">Profile</h3>
+              <p id="profileText2">Ferat Polisi was born on January 26, 1969 in Dobovjan, Struga. He graduated from Al-Azhar University in Cairo in 1995 (Philosophy–Sociology). He continued postgraduate studies at Saint Cyril and Methodius University (MA 2000, PhD 2002). He has lectured at the State University of Tetovo since 2001 and served as Mufti of Struga (2001–2012). He has a wide scientific activity with publications in philosophy, sociology and ethics.</p>
+            </div>
+
+            <div class="section">
+              <h3 data-i18n-cv="sectionOther">Other</h3>
+              <ul>
+                <li>Member of European Academy for Scientific Research and Interuniversity Conference of RNM (from 2024).</li>
+                <li>Long experience in academic teaching and public engagement.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <footer>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div>© <span id="y2"></span> Association for Equality & Social Justice</div>
+        <div>
+          <a class="cta" href="team.html">← Back to team</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const I18N_CV2 = {
+      EN:{emailLabel:'Email',sectionProfile:'Profile',sectionOther:'Other'},
+      AL:{emailLabel:'Email',sectionProfile:'Profil',sectionOther:'Të tjera'},
+      MK:{emailLabel:'Email',sectionProfile:'Профил',sectionOther:'Останато'}
+    };
+    function applyLang2(code){
+      document.documentElement.setAttribute('data-lang',code);
+      const pack=I18N_CV2[code]||I18N_CV2.EN;
+      document.querySelectorAll('[data-i18n-cv]').forEach(el=>{const k=el.getAttribute('data-i18n-cv'); if(pack[k]) el.textContent=pack[k];});
+      if(code==='AL'){
+        document.getElementById('title2').textContent='Zëvendës Drejtor';
+        document.getElementById('short2').textContent='Profesor i Filozofisë dhe Sociologjisë; ish-Myfti i Strugës.';
+        document.getElementById('profileText2').textContent='Ferat Polisi lindi më 26 janar 1969 në Dobovjan, Strugë. Ka diplomuar në Universitetin Al-Azhar në Kajro në vitin 1995 në Filozofi–Sociologji. Ka vijuar studimet pasuniversitare ku ka marrë magjistraturën dhe doktoraturën. Që nga viti 2001 ligjëron në Universitetin Shtetëror të Tetovës dhe ka shërbyer si Myfti i Strugës (2001–2012). Ka botime në filozofi, sociologji dhe etikë.';
+      } else if(code==='MK'){
+        document.getElementById('title2').textContent='Заменик Директор';
+        document.getElementById('short2').textContent='Професор по филозофија и социологија; поранешен муфтија на Струга.';
+        document.getElementById('profileText2').textContent='Ферат Полиси е роден на 26 јануари 1969 во Добовјан, Струга. Дипломирал на Универзитетот Ал-Азхар во Каиро во 1995 година, на насоката Филозофија–Социологија. Продолжил постдипломски студии, каде ги завршил магистерските и докторските студии. Од 2001 година предава на Универзитетот во Тетово и бил муфтија на Струга (2001–2012). Има обемна научна активност.';
+      } else {
+        document.getElementById('title2').textContent='Vice Director';
+        document.getElementById('short2').textContent='Professor of Philosophy and Sociology; Former Mufti of Struga.';
+        document.getElementById('profileText2').textContent='Ferat Polisi was born on January 26, 1969 in Dobovjan, Struga. He graduated from Al-Azhar University in Cairo in 1995 (Philosophy–Sociology). He continued postgraduate studies (MA 2000, PhD 2002) and has lectured at the State University of Tetovo since 2001. He served as Mufti of Struga between 2001 and 2012 and has an active publication record.';
+      }
+      document.querySelectorAll('#langBar2 button').forEach(b=>b.classList.toggle('active',b.dataset.lang===code));
+      localStorage.setItem('lang_cv_ferat',code);
+    }
+    document.getElementById('langBar2').addEventListener('click',e=>{const b=e.target.closest('button[data-lang]');if(!b)return;applyLang2(b.dataset.lang);});
+    document.getElementById('y2').textContent=new Date().getFullYear();
+    applyLang2(localStorage.getItem('lang_cv_ferat')||'EN');
+  </script>
+</body>
+</html>

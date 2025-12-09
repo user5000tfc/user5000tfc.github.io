@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en" data-lang="EN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Agim Nuhiu — CV</title>
+  <link rel="icon" href="favicon.ico">
+  <style>
+    :root{--deep-blue:#0b3c88;--warm-gold:#c79a4a;--ink:#0b1424;--muted:#5c6b7e;--panel:#fff;--bg:#f6f8fb;--line:rgba(11,20,36,.10);--radius:14px}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+    .container{max-width:1000px;margin:28px auto;padding:20px}
+    header{display:flex;justify-content:space-between;align-items:center;padding:18px;border-radius:12px;background:linear-gradient(180deg,#ffffff,#fbfdff);border:1px solid var(--line)}
+    .brand{font-weight:800;display:flex;gap:10px;align-items:center}
+    .brand .dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold))}
+    nav{display:flex;gap:10px;align-items:center}
+    .lang button{border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:999px;font-weight:700;cursor:pointer}
+    .lang button.active{background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold));color:#fff}
+    main{margin-top:18px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:0 10px 30px rgba(11,20,36,.06)}
+    .row{display:grid;grid-template-columns:260px 1fr;gap:20px;align-items:start}
+    .photo{width:100%;height:260px;background:#e9eef6;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+    h1{margin:0;font-size:22px}
+    .role{color:var(--deep-blue);font-weight:700;margin-top:6px}
+    .section{margin-top:14px}
+    .muted{color:var(--muted)}
+    .photo{background-image: url('img/team/agimnuhiu.jpg');background-repeat: no-repeat;background-size: cover;}
+    footer{margin-top:26px;padding:18px;border-radius:12px;background:linear-gradient(180deg,rgba(11,20,36,.03),rgba(11,20,36,.06));border:1px solid var(--line);color:var(--muted)}
+    a.cta{display:inline-block;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,var(--deep-blue),var(--warm-gold));color:#fff;font-weight:700;text-decoration:none}
+    @media(max-width:760px){.row{grid-template-columns:1fr} .photo{height:200px;}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand"><span class="dot"></span> ABDS</div>
+      <nav>
+        <a class="cta" href="index.html">←</a>
+        <div class="lang" id="langBar">
+          <button data-lang="EN" class="active">EN</button>
+          <button data-lang="AL">AL</button>
+          <button data-lang="MK">MK</button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <article class="card" id="cvCard">
+        <div class="row">
+          <div>
+            <div class="photo" id="photo"></div>
+            <div class="section muted" id="contact">
+              <p><strong data-i18n-cv="emailLabel">Email</strong>: <a href="mailto:agim.nuhiu@unite.edu.mk">agim.nuhiu@unite.edu.mk</a></p>
+            </div>
+          </div>
+          <div>
+            <h1 id="name">Agim Nuhiu</h1>
+            <div class="role" id="title">Executive Director</div>
+
+            <div class="section" id="summary">
+              <p id="short">Professor of Law; Former Minister of Interior.</p>
+            </div>
+
+            <div class="section" id="long">
+              <h3 data-i18n-cv="sectionProfile">Profile</h3>
+              <p id="profileText">Agim Nuhiu was born on August 24, 1977 in Tetovo. He is a full professor at the Faculty of Law at the University of Tetovo. Between 2016 and 2017 he served in senior positions in the Ministries of Interior and Justice, including serving as Minister of Interior (29 December 2016 – 1 June 2017). He has held multiple academic and administrative roles in higher education and public institutions and contributed to national commissions and policy formation. He has been active in legal research, university leadership and public service.</p>
+            </div>
+
+            <div class="section">
+              <h3 data-i18n-cv="sectionOther">Other</h3>
+              <ul id="otherList">
+                <li>Former member of State Commissions for exams and anti-discrimination.</li>
+                <li>Experience as Deputy Minister in several ministries.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <footer>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div>© <span id="y1"></span> Association for Equality & Social Justice</div>
+        <div>
+          <a class="cta" href="team.html">← Back to team</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // multilingual strings
+    const I18N_CV = {
+      EN:{emailLabel:'Email',sectionProfile:'Profile',sectionOther:'Other',back:'Back to team'},
+      AL:{emailLabel:'Email',sectionProfile:'Profil',sectionOther:'Të tjera',back:'← Kthehu te ekipi'},
+      MK:{emailLabel:'Email',sectionProfile:'Профил',sectionOther:'Останато',back:'← Назад кај тимот'}
+    };
+
+    function applyLang(code){
+      document.documentElement.setAttribute('data-lang',code);
+      const pack = I18N_CV[code]||I18N_CV.EN;
+      document.querySelectorAll('[data-i18n-cv]').forEach(el=>{const k=el.getAttribute('data-i18n-cv'); if(pack[k]) el.textContent=pack[k];});
+
+      // translations for content (short and profile)
+      if(code==='AL'){
+        document.getElementById('title').textContent='Drejtor Ekzekutiv';
+        document.getElementById('short').textContent='Profesor i së Drejtës; ish-Ministër i Punëve të Brendshme.';
+        document.getElementById('profileText').textContent='Agim Nuhiu lindi më 24 gusht 1977 në Tetovë. Është profesor ordinar në Fakultetin e Drejtësisë në Universitetin e Tetovës. Nga viti 2016 deri në 2017 ka shërbyer në pozita të larta në Ministritë e Punëve të Brendshme dhe të Drejtësisë, përfshirë mandat si Ministër i Punëve të Brendshme (29 dhjetor 2016 – 1 qershor 2017). Ka pasur role të shumta akademike dhe administrative dhe ka kontribuar në komisione dhe politika kombëtare.';
+      } else if(code==='MK'){
+        document.getElementById('title').textContent='Извршен директор';
+        document.getElementById('short').textContent='Професор по право; поранешен министер за внатрешни работи.';
+        document.getElementById('profileText').textContent='Агим Нухиу е роден на 24 август 1977 во Тетово. Тој е редовен професор на Правниот факултет при Универзитетот во Тетово. Во периодот 2016–2017 има извршувано високи функции во Министерствата за внатрешни работи и правда, вклучувајќи мандат како министер за внатрешни работи (29 декември 2016 – 1 јуни 2017). Има бројни академски и управни функции и придонесува во националните комисии и политики.';
+      } else {
+        document.getElementById('title').textContent='Executive Director';
+        document.getElementById('short').textContent='Professor of Law; Former Minister of Interior.';
+        document.getElementById('profileText').textContent='Agim Nuhiu was born on August 24, 1977 in Tetovo. He is a full professor at the Faculty of Law at the University of Tetovo. Between 2016 and 2017 he served in senior positions in the Ministries of Interior and Justice, including serving as Minister of Interior (29 December 2016 – 1 June 2017). He has held multiple academic and administrative roles in higher education and public institutions and contributed to national commissions and policy formation.';
+      }
+
+      // active lang button
+      document.querySelectorAll('#langBar button').forEach(b=>b.classList.toggle('active',b.dataset.lang===code));
+      localStorage.setItem('lang_cv_agim',code);
+    }
+
+    document.getElementById('langBar').addEventListener('click',e=>{const b=e.target.closest('button[data-lang]');if(!b) return;applyLang(b.dataset.lang);});
+    document.getElementById('y1').textContent=new Date().getFullYear();
+    applyLang(localStorage.getItem('lang_cv_agim')||'EN');
+  </script>
+</body>
+</html>
