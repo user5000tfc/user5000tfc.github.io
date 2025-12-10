@@ -198,10 +198,10 @@
 
         <div class="grid grid-2" style="margin-top:16px">
           <!-- Form -->
-          <form class="card" id="reportForm" novalidate enctype="multipart/form-data">
+          <form class="card" id="reportForm" action="https://formspree.io/f/xnnqqwoj" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
             <div class="form-grid">
               <div class="inline">
-                <input type="checkbox" id="isAnonymous">
+                <input name="anonimity" type="checkbox" id="isAnonymous">
                 <label for="isAnonymous" data-i18n-report="anonCheck">Submit anonymously (contact info not required)</label>
               </div>
 
@@ -210,7 +210,7 @@
               <div class="col-2 form-grid">
                 <label>
                   <span class="title" data-i18n-report="issueType">Issue Type</span>
-                  <select id="issueType" required>
+                  <select name="issueType" id="issueType" required>
                     <option value="" selected disabled data-i18n-report="optSelect">— Select —</option>
                     <option value="legal" data-i18n-report="optLegal">Legal Aid / Rights Violation</option>
                     <option value="discrimination" data-i18n-report="optDiscrimination">Discrimination</option>
@@ -224,7 +224,7 @@
 
                 <label>
                   <span class="title" data-i18n-report="urgency">Urgency</span>
-                  <select id="urgency" required>
+                  <select name="urgency" id="urgency" required>
                     <option value="" selected disabled data-i18n-report="optSelect">— Select —</option>
                     <option value="low" data-i18n-report="uLow">Low</option>
                     <option value="normal" data-i18n-report="uNormal">Normal</option>
@@ -236,13 +236,13 @@
 
               <label>
                 <span class="title" data-i18n-report="title">Title (short summary) <span class="req">*</span></span>
-                <input type="text" id="title" maxlength="140" required placeholder="">
+                <input name="title" type="text" id="title" maxlength="140" required placeholder="">
                 <div class="counter"><span id="titleCount">0</span>/140</div>
               </label>
 
               <label>
                 <span class="title" data-i18n-report="description">Description <span class="req">*</span></span>
-                <textarea id="description" rows="7" maxlength="2000" required placeholder=""></textarea>
+                <textarea name="description" id="description" rows="7" maxlength="2000" required placeholder=""></textarea>
                 <div class="counter"><span id="descCount">0</span>/2000</div>
                 <small class="help" data-i18n-report="descHelp">Include what happened, when, where, who was involved, and any evidence you have.</small>
               </label>
@@ -250,15 +250,15 @@
               <div class="col-3 form-grid">
                 <label>
                   <span class="title" data-i18n-report="location">Location (city/area)</span>
-                  <input type="text" id="location" placeholder="">
+                  <input name="location" type="text" id="location" placeholder="">
                 </label>
                 <label>
                   <span class="title" data-i18n-report="dateTime">Date & Time</span>
-                  <input type="datetime-local" id="dateTime">
+                  <input name="time" type="datetime-local" id="dateTime">
                 </label>
                 <label>
                   <span class="title" data-i18n-report="langPref">Preferred Language</span>
-                  <select id="langPref">
+                  <select name="language" id="langPref">
                     <option value="EN">EN</option>
                     <option value="AL">AL</option>
                     <option value="MK">MK</option>
@@ -271,12 +271,13 @@
                 <div class="form-grid col-2" style="margin-top:10px">
                   <label>
                     <span class="title" data-i18n-report="attachments">Attachments</span>
-                    <input type="file" id="attachments" multiple accept=".pdf,.jpg,.jpeg,.png,.mp4,.mov,.doc,.docx">
-                    <small class="help" data-i18n-report="attachHelp">You can upload documents, images, or videos. Max 25MB per file (server limits may apply).</small>
+                    <!-- <input name="file" type="file" id="attachments" multiple accept=".pdf,.jpg,.jpeg,.png,.mp4,.mov,.doc,.docx"> -->
+                      <input name="file" type="text" id="links" placeholder="https://">
+                    <small class="help" data-i18n-report="attachHelp">You can upload link to photos, videos, Google Drive Documents, etc.</small>
                   </label>
                   <label>
                     <span class="title" data-i18n-report="links">Links (optional)</span>
-                    <input type="text" id="links" placeholder="https://">
+                    <input name="link" type="text" id="links" placeholder="https://">
                     <small class="help" data-i18n-report="linksHelp">Paste URLs to posts, profiles, or public evidence.</small>
                   </label>
                 </div>
@@ -290,22 +291,22 @@
                 <div class="form-grid col-2" style="margin-top:10px">
                   <label>
                     <span class="title" data-i18n-report="fullName">Full Name</span>
-                    <input type="text" id="fullName" placeholder="">
+                    <input name="name" type="text" id="fullName" placeholder="">
                   </label>
                   <label>
                     <span class="title" data-i18n-report="email">Email</span>
-                    <input type="email" id="email" placeholder="you@example.org">
+                    <input name="email" type="email" id="email" placeholder="you@example.org">
                   </label>
                 </div>
 
                 <div class="form-grid col-2">
                   <label>
                     <span class="title" data-i18n-report="phone">Phone</span>
-                    <input type="tel" id="phone" placeholder="+389 ...">
+                    <input name="phone" type="tel" id="phone" placeholder="+389 ...">
                   </label>
                   <label>
                     <span class="title" data-i18n-report="contactMethod">Preferred Contact Method</span>
-                    <select id="contactMethod">
+                    <select name="contactMethod" id="contactMethod">
                       <option value="email" data-i18n-report="cmEmail">Email</option>
                       <option value="phone" data-i18n-report="cmPhone">Phone</option>
                       <option value="none" data-i18n-report="cmNone">No contact needed</option>
@@ -319,7 +320,7 @@
               <!-- Consent -->
               <div>
                 <div class="inline">
-                  <input type="checkbox" id="consent" required>
+                  <input name="consent" type="checkbox" id="consent" required>
                   <label for="consent" data-i18n-report="consent">I consent to the processing of the information provided for the purpose of assistance and follow-up.</label>
                 </div>
                 <small class="help" data-i18n-report="privacyNote">
@@ -450,7 +451,7 @@
         descHelp:"Include what happened, when, where, who was involved, and any evidence you have.",
         location:"Location (city/area)", dateTime:"Date & Time", langPref:"Preferred Language",
 
-        evidence:"Evidence (optional)", attachments:"Attachments", attachHelp:"You can upload documents, images, or videos. Max 25MB per file (server limits may apply).",
+        evidence:"Evidence (optional)", attachments:"Attachments", attachHelp:"You can upload link to photos, videos, Google Drive Documents, etc.",
         links:"Links (optional)", linksHelp:"Paste URLs to posts, profiles, or public evidence.",
 
         contactHeader:"Your Contact (optional if anonymous is checked)",
@@ -493,7 +494,7 @@
         descHelp:"Përfshini çfarë ndodhi, kur, ku, kush ishte i përfshirë dhe çdo provë që keni.",
         location:"Lokacioni (qyteti/zona)", dateTime:"Data & Ora", langPref:"Gjuha e preferuar",
 
-        evidence:"Prova (opsional)", attachments:"Bashkëngjitje", attachHelp:"Mund të ngarkoni dokumente, imazhe ose video. Maks. 25MB për skedar (mund të aplikohen kufizime të serverit).",
+        evidence:"Prova (opsional)", attachments:"Bashkëngjitje", attachHelp:"Ju mund të ngarkoni linqe të videove, fotove, dokumente në Google Drive, etj.",
         links:"Linqe (opsional)", linksHelp:"Ngjit URL të postimeve, profileve ose provave publike.",
 
         contactHeader:"Kontakti juaj (opsional nëse zgjidhni anonim)",
@@ -536,7 +537,7 @@
         descHelp:"Вклучете што се случило, кога, каде, кои биле вклучени и какви докази имате.",
         location:"Локација (град/област)", dateTime:"Датум и време", langPref:"Претпочитан јазик",
 
-        evidence:"Докази (по желба)", attachments:"Прилози", attachHelp:"Може да прикачите документи, слики или видеа. Макс. 25MB по датотека (можни се серверски ограничувања).",
+        evidence:"Докази (по желба)", attachments:"Прилози", attachHelp:"Може да прикачите линк на слика, видео, документ на Google Drive, итн.",
         links:"Линкови (по желба)", linksHelp:"Залепете URL до објави, профили или јавни докази.",
 
         contactHeader:"Ваш контакт (по желба ако е означено анонимно)",
@@ -632,40 +633,40 @@
       setTimeout(()=> toast.style.display = 'none', 4000);
     }
 
-    f.addEventListener('submit', (e)=>{
-      e.preventDefault();
-      hideError();
+    // f.addEventListener('submit', (e)=>{
+    //   e.preventDefault();
+    //   hideError();
 
-      if (!document.getElementById('issueType').value ||
-          !document.getElementById('urgency').value ||
-          !titleEl.value.trim() ||
-          !descEl.value.trim() ||
-          !document.getElementById('consent').checked){
-        return showError(t('errRequired'));
-      }
+    //   if (!document.getElementById('issueType').value ||
+    //       !document.getElementById('urgency').value ||
+    //       !titleEl.value.trim() ||
+    //       !descEl.value.trim() ||
+    //       !document.getElementById('consent').checked){
+    //     return showError(t('errRequired'));
+    //   }
 
-      if (!isAnonymous.checked){
-        const method = document.getElementById('contactMethod').value;
-        const email = document.getElementById('email').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        if (method === 'email' && !email) return showError(t('errRequired'));
-        if (method === 'phone' && !phone) return showError(t('errRequired'));
-      }
+    //   if (!isAnonymous.checked){
+    //     const method = document.getElementById('contactMethod').value;
+    //     const email = document.getElementById('email').value.trim();
+    //     const phone = document.getElementById('phone').value.trim();
+    //     if (method === 'email' && !email) return showError(t('errRequired'));
+    //     if (method === 'phone' && !phone) return showError(t('errRequired'));
+    //   }
 
-      // Build payload (ready for real backend integration)
-      const data = new FormData(f);
-      data.append('isAnonymous', isAnonymous.checked ? '1' : '0');
-      data.append('submittedAt', new Date().toISOString());
+    //   // Build payload (ready for real backend integration)
+    //   const data = new FormData(f);
+    //   data.append('isAnonymous', isAnonymous.checked ? '1' : '0');
+    //   data.append('submittedAt', new Date().toISOString());
 
-      // Demo success (replace with fetch POST to your API)
-      f.reset();
-      isAnonymous.checked = false;
-      contactBlock.classList.remove('hidden');
-      updateCount(titleEl, titleCount);
-      updateCount(descEl, descCount);
-      hideError();
-      showToast(t('okSubmitted'));
-    });
+    //   // Demo success (replace with fetch POST to your API)
+    //   f.reset();
+    //   isAnonymous.checked = false;
+    //   contactBlock.classList.remove('hidden');
+    //   updateCount(titleEl, titleCount);
+    //   updateCount(descEl, descCount);
+    //   hideError();
+    //   showToast(t('okSubmitted'));
+    // });
   </script>
 </body>
 </html>

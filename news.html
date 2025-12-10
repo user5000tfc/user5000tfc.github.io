@@ -224,7 +224,7 @@
             <p class="hero-excerpt" id="heroExcerpt">—</p>
             <div class="hero-meta" id="heroMeta">—</div>
             <div class="hero-actions">
-              <a class="btn" id="heroBtn" href="#" data-i18n-news="readMore">Read more</a>
+              <!-- <a class="btn" id="heroBtn" href="#" data-i18n-news="readMore">Read more</a> -->
             </div>
           </div>
         </article>
@@ -268,8 +268,8 @@
   <script id="news-data" type="application/json">
   [
     {
-      "date":"2025-10-28",
-      "image":"https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1600&auto=format&fit=crop",
+      "date":"2025-12-10",
+      "image":"img/news/news7.png",
       "url":"#",
       "category":{"EN":"Update","AL":"Përditësim","MK":"Ажурирање"},
       "title":{
@@ -285,14 +285,14 @@
       "place":{"EN":"Skopje","AL":"Shkup","MK":"Скопје"}
     },
     {
-      "date":"2025-09-14",
-      "image":"https://images.unsplash.com/photo-1520975922325-24baf93843fd?q=80&w=1600&auto=format&fit=crop",
+      "date":"2024-12-10",
+      "image":"img/news/news5.jpg",
       "url":"#",
-      "category":{"EN":"Report","AL":"Raport","MK":"Извештај"},
+      "category":{"EN":"Event","AL":"Ngjarje","MK":"Настан"},
       "title":{
-        "EN":"Policy Brief: Equal Access to Public Services",
-        "AL":"Raport Politikash: Qasje e Barabartë në Shërbimet Publike",
-        "MK":"Политички бриф: Еднаква пристапност до јавни услуги"
+        "EN":"International Day of Human Rights",
+        "AL":"International Day of Human Rights",
+        "MK":"International Day of Human Rights"
       },
       "excerpt":{
         "EN":"Recommendations for municipalities to remove structural barriers.",
@@ -302,14 +302,14 @@
       "place":{"EN":"Research","AL":"Kërkim","MK":"Истражување"}
     },
     {
-      "date":"2025-08-19",
-      "image":"https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=1600&auto=format&fit=crop",
+      "date":"2025-02-20",
+      "image":"img/news/news3.jpg",
       "url":"#",
-      "category":{"EN":"Announcement","AL":"Njoftim","MK":"Соопштение"},
+      "category":{"EN":"Event","AL":"Ngjarje","MK":"Настан"},
       "title":{
-        "EN":"New Partnership for Women’s Empowerment",
-        "AL":"Partneritet i ri për fuqizimin e grave",
-        "MK":"Ново партнерство за оснажување на жените"
+        "EN":"Panel Discussion - World Day of Social Justice",
+        "AL":"Panel Discussion - World Day of Social Justice",
+        "MK":"Panel Discussion - World Day of Social Justice"
       },
       "excerpt":{
         "EN":"Joint programs with local NGOs to expand mentorship.",
@@ -319,14 +319,14 @@
       "place":{"EN":"Nationwide","AL":"Mbarë vendi","MK":"Низ државата"}
     },
     {
-      "date":"2025-08-02",
-      "image":"https://images.unsplash.com/photo-1565373670035-2a4e6a5c0f45?q=80&w=1600&auto=format&fit=crop",
+      "date":"2025-08-05",
+      "image":"img/news/news4.jpg",
       "url":"#",
       "category":{"EN":"Event","AL":"Ngjarje","MK":"Настан"},
       "title":{
-        "EN":"Youth Rights Workshop in Tetovo",
-        "AL":"Punëtori për të Drejtat e të Rinjve në Tetovë",
-        "MK":"Работилница за младински права во Тетово"
+        "EN":"Panel Discussion - Human Rights",
+        "AL":"Panel Discussion - Human Rights",
+        "MK":"Panel Discussion - Human Rights"
       },
       "excerpt":{
         "EN":"Hands-on training on rights, duties, and participation.",
@@ -387,8 +387,8 @@
         if (pack[k]) el.textContent = pack[k];
       });
       // hero button text
-      const heroBtn = document.getElementById('heroBtn');
-      if (heroBtn) heroBtn.textContent = pack.readMore;
+      // const heroBtn = document.getElementById('heroBtn');
+      // if (heroBtn) heroBtn.textContent = pack.readMore;
       // hero kicker
       const hk = document.getElementById('heroKicker');
       if (hk) hk.textContent = pack.latest;
@@ -410,7 +410,7 @@
     const heroTitle = document.getElementById('heroTitle');
     const heroExcerpt = document.getElementById('heroExcerpt');
     const heroMeta = document.getElementById('heroMeta');
-    const heroBtn = document.getElementById('heroBtn');
+    // const heroBtn = document.getElementById('heroBtn');
     const grid = document.getElementById('newsGrid');
 
     function renderHero(lang){
@@ -421,7 +421,7 @@
       const place = (hero.place && (hero.place[lang] || hero.place.EN)) || "";
       const d = new Date(hero.date).toLocaleDateString(lang === 'MK' ? 'mk-MK' : (lang === 'AL' ? 'sq-AL' : 'en-GB'), {year:'numeric', month:'short', day:'2-digit'});
       heroMeta.textContent = `${d} • ${place}`;
-      heroBtn.href = hero.url;
+      // heroBtn.href = hero.url;
     }
 
     function makeCard(item, lang){
@@ -439,11 +439,11 @@
       title.setAttribute('data-title-al', item.title.AL);
       title.setAttribute('data-title-mk', item.title.MK);
 
-      const excerpt = document.createElement('p');
-      excerpt.className = 'news-excerpt';
-      excerpt.setAttribute('data-excerpt-en', item.excerpt.EN);
-      excerpt.setAttribute('data-excerpt-al', item.excerpt.AL);
-      excerpt.setAttribute('data-excerpt-mk', item.excerpt.MK);
+      // const excerpt = document.createElement('p');
+      // excerpt.className = 'news-excerpt';
+      // excerpt.setAttribute('data-excerpt-en', item.excerpt.EN);
+      // excerpt.setAttribute('data-excerpt-al', item.excerpt.AL);
+      // excerpt.setAttribute('data-excerpt-mk', item.excerpt.MK);
 
       const meta = document.createElement('div');
       meta.className = 'news-meta';
@@ -452,15 +452,15 @@
       meta.setAttribute('data-place-mk', item.place?.MK || '');
       meta.setAttribute('data-date', item.date);
 
-      const link = document.createElement('a');
-      link.className = 'link';
-      link.href = item.url;
-      link.setAttribute('data-i18n-news','readMore');
+      // const link = document.createElement('a');
+      // link.className = 'link';
+      // link.href = item.url;
+      // link.setAttribute('data-i18n-news','readMore');
 
       body.appendChild(title);
-      body.appendChild(excerpt);
+      // body.appendChild(excerpt);
       body.appendChild(meta);
-      body.appendChild(link);
+      // body.appendChild(link);
 
       card.appendChild(media);
       card.appendChild(body);
@@ -476,14 +476,14 @@
       const mt = card.querySelector('.news-meta');
 
       const t = tt.getAttribute(lang === 'AL' ? 'data-title-al' : lang === 'MK' ? 'data-title-mk' : 'data-title-en');
-      const e = ex.getAttribute(lang === 'AL' ? 'data-excerpt-al' : lang === 'MK' ? 'data-excerpt-mk' : 'data-excerpt-en');
+      // const e = ex.getAttribute(lang === 'AL' ? 'data-excerpt-al' : lang === 'MK' ? 'data-excerpt-mk' : 'data-excerpt-en');
 
       const dateISO = mt.getAttribute('data-date');
       const place = mt.getAttribute(lang === 'AL' ? 'data-place-al' : lang === 'MK' ? 'data-place-mk' : 'data-place-en');
       const d = new Date(dateISO).toLocaleDateString(lang === 'MK' ? 'mk-MK' : (lang === 'AL' ? 'sq-AL' : 'en-GB'), {year:'numeric', month:'short', day:'2-digit'});
 
       tt.textContent = t;
-      ex.textContent = e;
+      // ex.textContent = e;
       mt.textContent = place ? `${d} • ${place}` : d;
     }
 

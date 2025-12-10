@@ -132,7 +132,7 @@
         <div class="tabs" role="tablist" aria-label="Involvement paths">
           <button class="tab-btn" id="tab-volunteer" role="tab" aria-selected="false" data-path="volunteer" data-i18n="volunteer">Volunteer</button>
           <button class="tab-btn" id="tab-partner" role="tab" aria-selected="false" data-path="partner" data-i18n="partner">Partner</button>
-          <button class="tab-btn" id="tab-donate" role="tab" aria-selected="false" data-path="donate" data-i18n="donate">Donate</button>
+          <!-- <button class="tab-btn" id="tab-donate" role="tab" aria-selected="false" data-path="donate" data-i18n="donate">Donate</button> -->
         </div>
 
         <!-- Intro-only text (shown when no ?tab param) -->
@@ -157,7 +157,7 @@
         <section class="card hidden" id="panel-volunteer" role="tabpanel" aria-labelledby="tab-volunteer">
           <h2 style="margin:0 0 8px" data-i18n="vTitle">Volunteer Application</h2>
           <p class="lead" data-i18n="vLead">Tell us about you and how you’d like to help.</p>
-          <form id="form-volunteer" class="form-grid" novalidate enctype="multipart/form-data">
+          <form id="form-volunteer" class="form-grid" action="https://formspree.io/f/xnnqqwoj" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
             <div class="form-grid col-2">
               <label><span class="t" data-i18n="fullName">Full Name</span><input type="text" name="fullName" required></label>
               <label><span class="t" data-i18n="email">Email</span><input type="email" name="email" required placeholder="you@example.org"></label>
@@ -189,8 +189,9 @@
                 </select>
               </label>
               <label>
-                <span class="t" data-i18n="cv">Upload CV (PDF)</span>
-                <input type="file" name="cv" accept=".pdf">
+                <span class="t" data-i18n="cv">Upload link to CV</span>
+                <!-- <input type="file" name="cv" accept=".pdf"> -->
+                 <input type="url" name="cv" placeholder="https://"></label>
                 <small class="help" data-i18n="cvHelp">Optional but helpful.</small>
               </label>
             </div>
@@ -210,7 +211,7 @@
         <section class="card hidden" id="panel-partner" role="tabpanel" aria-labelledby="tab-partner">
           <h2 style="margin:0 0 8px" data-i18n="pTitle">Partnership Proposal</h2>
           <p class="lead" data-i18n="pLead">Work with us on research, training, or service delivery.</p>
-          <form id="form-partner" class="form-grid" novalidate>
+          <form id="form-partner" class="form-grid" action="https://formspree.io/f/xnnqqwoj" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
             <div class="form-grid col-2">
               <label><span class="t" data-i18n="orgName">Organization Name</span><input type="text" name="orgName" required></label>
               <label><span class="t" data-i18n="contactPerson">Contact Person</span><input type="text" name="contactPerson" required></label>
@@ -260,10 +261,10 @@
         </section>
 
         <!-- Donate -->
-        <section class="card hidden" id="panel-donate" role="tabpanel" aria-labelledby="tab-donate">
+        <!-- <section class="card hidden" id="panel-donate" role="tabpanel" aria-labelledby="tab-donate">
           <h2 style="margin:0 0 8px" data-i18n="dTitle">Donate</h2>
           <p class="lead" data-i18n="dLead">Your contribution funds legal aid, education, and urgent support.</p>
-          <form id="form-donate" class="form-grid" novalidate>
+          <form id="form-donate" class="form-grid" action="https://formspree.io/f/xnnqqwoj" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
             <div class="form-grid col-2">
               <label><span class="t" data-i18n="fullName">Full Name</span><input type="text" name="fullName"></label>
               <label><span class="t" data-i18n="email">Email</span><input type="email" name="email" placeholder="you@example.org"></label>
@@ -301,11 +302,11 @@
             <div style="display:flex;gap:12px;flex-wrap:wrap">
               <button class="cta" type="submit" data-i18n="donateBtn">Donate →</button>
               <button class="btn-ghost" type="reset" data-i18n="reset">Reset</button>
-              <!-- <a class="btn-ghost" href="get-involved.html" data-i18n="clearTab">Clear Tab</a> -->
-            </div>
+              <a class="btn-ghost" href="get-involved.html" data-i18n="clearTab">Clear Tab</a> -->
+            <!-- </div>
             <small class="help" data-i18n="donateHelp">On submit you can redirect to your payment page / processor.</small>
           </form>
-        </section>
+        </section> -->
       </div>
     </section>
   </main>
@@ -364,7 +365,7 @@
           fullName:"Full Name",email:"Email",phone:"Phone",city:"City",areas:"Areas of Interest",
           aOutreach:"Community outreach",aTranslation:"Translation",aResearch:"Research",aEvents:"Events",aLegal:"Legal support",aIT:"IT / Web",
           availability:"Availability",optSelect:"— Select —",avWeekday:"Weekdays",avWeekend:"Weekends",avEvening:"Evenings",avFlexible:"Flexible",
-          cv:"Upload CV (PDF)",cvHelp:"Optional but helpful.",linkedin:"LinkedIn / Portfolio (URL)",motivation:"Motivation",
+          cv:"Upload link to CV",cvHelp:"Optional but helpful.",linkedin:"LinkedIn / Portfolio (URL)",motivation:"Motivation",
           consent:"I consent to the processing of my data for the purpose of volunteering.",
           orgName:"Organization Name",contactPerson:"Contact Person",orgType:"Organization Type",
           otNGO:"NGO",otSchool:"School / University",otGov:"Government",otCompany:"Company",otOther:"Other",
@@ -385,7 +386,7 @@
           fullName:"Emri i Plotë",email:"Email",phone:"Telefoni",city:"Qyteti",areas:"Fusha Interesi",
           aOutreach:"Teren / komunitet",aTranslation:"Përkthim",aResearch:"Kërkim",aEvents:"Evente",aLegal:"Mbështetje ligjore",aIT:"IT / Web",
           availability:"Disponueshmëria",optSelect:"— Zgjidh —",avWeekday:"Ditë pune",avWeekend:"Fundjava",avEvening:"Mbrëmje",avFlexible:"Fleksibël",
-          cv:"Ngarko CV (PDF)",cvHelp:"Opsionale por e dobishme.",linkedin:"LinkedIn / Portfolio (URL)",motivation:"Motivimi",
+          cv:"Ngarko link për CV",cvHelp:"Opsionale por e dobishme.",linkedin:"LinkedIn / Portfolio (URL)",motivation:"Motivimi",
           consent:"Jap pëlqimin për përpunimin e të dhënave për qëllime vullnetarizmi.",
           orgName:"Emri i Organizates",contactPerson:"Person Kontakti",orgType:"Lloji i Organizates",
           otNGO:"OJQ",otSchool:"Shkollë / Universitet",otGov:"Qeveri",otCompany:"Kompani",otOther:"Tjetër",
@@ -406,7 +407,7 @@
           fullName:"Име и презиме",email:"Е-пошта",phone:"Телефон",city:"Град",areas:"Области на интерес",
           aOutreach:"Терен / заедница",aTranslation:"Превод",aResearch:"Истражување",aEvents:"Настани",aLegal:"Правна поддршка",aIT:"ИТ / Веб",
           availability:"Достапност",optSelect:"— Избери —",avWeekday:"Работни денови",avWeekend:"Викенди",avEvening:"Навечер",avFlexible:"Флексибилно",
-          cv:"Постави CV (PDF)",cvHelp:"По желба, но корисно.",linkedin:"LinkedIn / Портфолио (URL)",motivation:"Мотивација",
+          cv:"Постави линк за CV",cvHelp:"По желба, но корисно.",linkedin:"LinkedIn / Портфолио (URL)",motivation:"Мотивација",
           consent:"Се согласувам на обработка на моите податоци за цел на волонтирање.",
           orgName:"Име на организација",contactPerson:"Контакт лице",orgType:"Тип на организација",
           otNGO:"НВО",otSchool:"Училиште / Универзитет",otGov:"Влада",otCompany:"Компанија",otOther:"Друго",
@@ -443,12 +444,12 @@
     const panels={
       volunteer: document.getElementById('panel-volunteer'),
       partner: document.getElementById('panel-partner'),
-      donate: document.getElementById('panel-donate')
+      // donate: document.getElementById('panel-donate')
     };
     const buttons={
       volunteer: document.getElementById('tab-volunteer'),
       partner: document.getElementById('tab-partner'),
-      donate: document.getElementById('tab-donate')
+      // donate: document.getElementById('tab-donate')
     };
     function activateTab(name,{push=true}={}){
       // reset
@@ -482,22 +483,22 @@
     });
 
     // Simple “submit” handlers (demo)
-    function hookForm(id, onOk){
-      const f=document.getElementById(id); if(!f) return;
-      f.addEventListener('submit',e=>{
-        e.preventDefault();
-        // naive required check
-        const missing=[...f.querySelectorAll('[required]')].some(el=>!el.value || (el.type==='checkbox'&&!el.checked));
-        if(missing){ alert('Please complete required fields.'); return; }
-        onOk?.(new FormData(f));
-      });
-    }
-    hookForm('form-volunteer',()=>alert('Application sent. Thank you!'));
-    hookForm('form-partner',()=>alert('Partnership proposal sent. Thank you!'));
-    hookForm('form-donate',fd=>{
-      alert('Thank you for your donation intent! Redirecting to payment…');
-      // Example: location.href = `/pay?amount=${encodeURIComponent(fd.get('amount'))}&currency=${fd.get('currency')}`;
-    });
+    // function hookForm(id, onOk){
+    //   const f=document.getElementById(id); if(!f) return;
+    //   f.addEventListener('submit',e=>{
+    //     e.preventDefault();
+    //     // naive required check
+    //     const missing=[...f.querySelectorAll('[required]')].some(el=>!el.value || (el.type==='checkbox'&&!el.checked));
+    //     if(missing){ alert('Please complete required fields.'); return; }
+    //     onOk?.(new FormData(f));
+    //   });
+    // }
+    // hookForm('form-volunteer',()=>alert('Application sent. Thank you!'));
+    // hookForm('form-partner',()=>alert('Partnership proposal sent. Thank you!'));
+    // hookForm('form-donate',fd=>{
+    //   alert('Thank you for your donation intent! Redirecting to payment…');
+    //   // Example: location.href = `/pay?amount=${encodeURIComponent(fd.get('amount'))}&currency=${fd.get('currency')}`;
+    // });
   </script>
 </body>
 </html>
